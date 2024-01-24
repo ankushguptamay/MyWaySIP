@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require("cors");
 const admin = require('./Routes/adminRoute');
+const user = require('./Routes/userRoute');
 const db = require('./Models');
 // const fs = require('fs');
 // const pdf = require('pdf-parse');
@@ -34,7 +35,8 @@ app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use("/admin", admin);
+app.use("/api/admin", admin);
+app.use("/api/user", user);
 
 app.get('/', (req, res) => {
   res.send('Hello World!');

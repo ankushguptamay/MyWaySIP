@@ -29,6 +29,7 @@ router.post("createService", verifyAdminToken, isAdminPresent, createService);
 router.get("requiredQuestions", verifyAdminToken, isAdminPresent, getAllRequiredQuestion);
 router.get("requiredQuestions/:id", verifyAdminToken, isAdminPresent, getRequiredQuestion);
 router.post("createRequiredQuestion/:id", verifyAdminToken, isAdminPresent, createRequiredQuestion);
+router.get("userResult/:id", verifyAdminToken, isAdminPresent, getUserResult);
 
 // User
 router.get("users", verifyAdminToken, isAdminPresent, allUserForAdmin);
@@ -44,6 +45,5 @@ router.get("/mFunds/:id", verifyAdminToken, isAdminPresent, getMFundForAdmin); /
 router.get("notifications", verifyAdminToken, isAdminPresent, getAllNotification);
 router.get("notifications/:id", verifyAdminToken, isAdminPresent, getNotification);
 router.put("changeSeenStatus/:id", verifyAdminToken, isAdminPresent, changeSeenStatus);
-router.get("userResult/:id", verifyAdminToken, isAdminPresent, getUserResult);
 
 module.exports = router;

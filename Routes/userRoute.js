@@ -5,6 +5,7 @@ const { registerByEmailOTP, verifyOTP, signInByEmailOTP, updateUser, getUser } =
 const { getAllRequiredQuestion, getRequiredQuestion, attempQuestion, getMyResult } = require('../Controllers/Admin/requiredQuestionController');
 const { getAllService, getService } = require('../Controllers/Admin/myServiceController');
 const { getMyMFund, addMFund, softDeleteMFund, updateMFund } = require('../Controllers/User/mFundController');
+const { createPayment, verifyPayment } = require('../Controllers/User/user_serviceController');
 const { addStockPortfolio, getMyStockPortfolio, updateStockPortfolio, softDeleteStockPortfolio } = require('../Controllers/User/stockPortfolioController');
 
 //middleware
@@ -38,5 +39,9 @@ router.delete("/deleteMFund/:id", verifyUserToken, isUserPresent, isUserAttempte
 // Service
 router.get("services", verifyUserToken, isUserPresent, getAllService);
 router.get("services/:id", verifyUserToken, isUserPresent, isUserAttemptedAllQuestion, getService);
+
+// Purchase
+router.post("/createPayment/:id", verifyUserToken, isUserPresent, isUserAttemptedAllQuestion, createPayment);
+router.post("/verifyPayment", verifyPayment);
 
 module.exports = router;

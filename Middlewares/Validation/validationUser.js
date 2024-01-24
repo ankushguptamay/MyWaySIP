@@ -61,3 +61,12 @@ exports.addMFund = (data) => {
     });
     return schema.validate(data);
 }
+
+exports.createPayment = (data) => {
+    const schema = joi.object().keys({
+        amount: joi.string().required(),
+        currency: joi.string().required(),
+        receipt: joi.string().required(),
+    });
+    return schema.validate(data);
+}

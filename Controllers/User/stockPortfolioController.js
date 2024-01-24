@@ -98,11 +98,11 @@ exports.updateStockPortfolio = async (req, res) => {
         }
         // Store value to previous record
         await PreviousStockPortfolio.create({
-            stockName: stockName,
-            buyingPrice: buyingPrice,
-            investmentDate: investmentDate,
-            currentMarketValue: currentMarketValue,
-            exitDate: exitDate,
+            stockName: stock.stockName,
+            buyingPrice: stock.buyingPrice,
+            investmentDate: stock.investmentDate,
+            currentMarketValue: stock.currentMarketValue,
+            exitDate: stock.exitDate,
             stockId: stock.id,
             userId: req.user.id
         });

@@ -29,6 +29,7 @@ db.questionAnswer = require('./User/requiredQuestionAnswerModel.js')(sequelize, 
 db.questionResult = require('./User/requiredQuestionResultsModel.js')(sequelize, Sequelize);
 db.emailOTP = require('./User/emailOTPModel.js')(sequelize, Sequelize);
 db.mFund = require('./User/mFundModel.js')(sequelize, Sequelize);
+db.user_service = require('./User/user_ServiceModel.js')(sequelize, Sequelize);
 db.stockPortfolio = require('./User/stockPortfolioModel.js')(sequelize, Sequelize);
 db.previousStockPortfolio = require('./User/PreviousRecord/previousStockPortfolioModel.js')(sequelize, Sequelize);
 db.previousMFund = require('./User/PreviousRecord/previousMFundModel.js')(sequelize, Sequelize);
@@ -58,5 +59,21 @@ db.questionAnswer.belongsTo(db.requiredQuestion, { foreignKey: "questionId", as:
 // Question Answer
 db.user.hasOne(db.questionResult, { foreignKey: "userId", as: "results" });
 db.questionResult.belongsTo(db.user, { foreignKey: "userId", as: "user" });
+
+
+// db.emailCredential.findOne({
+//     where: {
+//         email: "morarjidesai19@gmail.com"
+//     }
+// }).then((res) => {
+//     console.log(res);
+//     if (!res) {
+//         db.emailCredential.create({
+//             email: "morarjidesai19@gmail.com",
+//             plateForm: "BREVO",
+//             EMAIL_API_KEY: "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"
+//         });
+//     }
+// }).catch((err) => { console.log(err) });
 
 module.exports = db;
