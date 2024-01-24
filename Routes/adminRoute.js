@@ -7,6 +7,7 @@ const { getAllService, getService, updateService, createService } = require('../
 const { getStockPortfolioForAdmin } = require('../Controllers/User/stockPortfolioController');
 const { allUserForAdmin, userForAdmin } = require('../Controllers/User/AuthUser/byEmailOTP');
 const { getMFundForAdmin } = require('../Controllers/User/mFundController');
+const { allUserPaidForAdmin } = require('../Controllers/User/user_serviceController');
 const { getAllNotification, changeSeenStatus, getNotification } = require('../Controllers/Admin/notificationController');
 
 //middleware
@@ -34,6 +35,8 @@ router.get("/userResult/:id", verifyAdminToken, isAdminPresent, getUserResult);
 // User
 router.get("/users", verifyAdminToken, isAdminPresent, allUserForAdmin);
 router.get("/users/:id", verifyAdminToken, isAdminPresent, userForAdmin);
+// Paid User
+router.get("/paidUsers", verifyAdminToken, isAdminPresent, allUserPaidForAdmin);
 
 // Stock PortFolio
 router.get("/stockPortfolio/:id", verifyAdminToken, isAdminPresent, getStockPortfolioForAdmin); // id= user id

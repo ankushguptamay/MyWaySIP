@@ -145,6 +145,28 @@ exports.allUserPaidForAdmin = async (req, res) => {
             })
         }
         // Only paid User
+        const usersId = [];
+        let allSuccessPayment;
+        if (serviceId) {
+            allSuccessPayment = await User_Service.findAll({
+                where: {
+                    serviceId: serviceId,
+                    status: "Paid",
+                    verify: true
+                }
+            });
+        } else {
+            allSuccessPayment = await User_Service.findAll({
+                where: {
+                    status: "Paid",
+                    verify: true
+                }
+            });
+        }
+        for (let i = 0; i < allSuccessPayment.length; i++) {
+            usersId.push(allSuccessPayment[i].userId);
+        }
+        condition.push({ id: usersId });
         // Count All User
         const totalUser = await User.count({
             where: {
