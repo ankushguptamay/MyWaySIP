@@ -1,0 +1,8 @@
+Service
+//get Service, In this route user profile should be complete but required questions do not need
+curl --location 'http://localhost:8080/api/user/services' \
+--header 'Authorization: Bearer authToken'
+
+// get Service by ID, In this route user profile should be complete and required questions alson attemp
+curl --location 'http://localhost:8080/api/user/services/:id' \
+--header 'Authorization: Bearer authToken'

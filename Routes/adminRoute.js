@@ -20,20 +20,20 @@ router.put("/updateAdmin", verifyAdminToken, isAdminPresent, updateAdminName);
 router.get("/admin", verifyAdminToken, isAdminPresent, getAdmin);
 
 // Service
-router.get("services", verifyAdminToken, isAdminPresent, getAllService);
-router.get("services/:id", verifyAdminToken, isAdminPresent, getService);
-router.put("updateService/:id", verifyAdminToken, isAdminPresent, updateService);
-router.post("createService", verifyAdminToken, isAdminPresent, createService);
+router.get("/services", verifyAdminToken, isAdminPresent, getAllService);
+router.get("/services/:id", verifyAdminToken, isAdminPresent, getService);
+router.put("/updateService/:id", verifyAdminToken, isAdminPresent, updateService);
+// router.post("/createService", verifyAdminToken, isAdminPresent, createService);
 
 // RequiredQuestion
-router.get("requiredQuestions", verifyAdminToken, isAdminPresent, getAllRequiredQuestion);
-router.get("requiredQuestions/:id", verifyAdminToken, isAdminPresent, getRequiredQuestion);
-router.post("createRequiredQuestion/:id", verifyAdminToken, isAdminPresent, createRequiredQuestion);
-router.get("userResult/:id", verifyAdminToken, isAdminPresent, getUserResult);
+router.get("/requiredQuestions", verifyAdminToken, isAdminPresent, getAllRequiredQuestion);
+router.get("/requiredQuestions/:id", verifyAdminToken, isAdminPresent, getRequiredQuestion);
+// router.post("/createRequiredQuestion/:id", verifyAdminToken, isAdminPresent, createRequiredQuestion);
+router.get("/userResult/:id", verifyAdminToken, isAdminPresent, getUserResult);
 
 // User
-router.get("users", verifyAdminToken, isAdminPresent, allUserForAdmin);
-router.get("users/:id", verifyAdminToken, isAdminPresent, userForAdmin);
+router.get("/users", verifyAdminToken, isAdminPresent, allUserForAdmin);
+router.get("/users/:id", verifyAdminToken, isAdminPresent, userForAdmin);
 
 // Stock PortFolio
 router.get("/stockPortfolio/:id", verifyAdminToken, isAdminPresent, getStockPortfolioForAdmin); // id= user id
@@ -42,8 +42,8 @@ router.get("/stockPortfolio/:id", verifyAdminToken, isAdminPresent, getStockPort
 router.get("/mFunds/:id", verifyAdminToken, isAdminPresent, getMFundForAdmin); // id= user id
 
 // Notification
-router.get("notifications", verifyAdminToken, isAdminPresent, getAllNotification);
-router.get("notifications/:id", verifyAdminToken, isAdminPresent, getNotification);
-router.put("changeSeenStatus/:id", verifyAdminToken, isAdminPresent, changeSeenStatus);
+router.get("/notifications", verifyAdminToken, isAdminPresent, getAllNotification);
+router.get("/notifications/:id", verifyAdminToken, isAdminPresent, getNotification);
+router.put("/changeSeenStatus/:id", verifyAdminToken, isAdminPresent, changeSeenStatus);
 
 module.exports = router;

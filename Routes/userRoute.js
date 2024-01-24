@@ -13,16 +13,16 @@ const { verifyUserToken } = require('../Middlewares/verifyJWT');
 const { isUserPresent, isUserAttemptedAllQuestion } = require('../Middlewares/isPresent');
 
 router.post("/register", registerByEmailOTP);
-router.post("/login", verifyOTP);
-router.post("/changePassword", signInByEmailOTP);
+router.post("/verifyOTP", verifyOTP);
+router.post("/login", signInByEmailOTP);
 router.get("/user", verifyUserToken, getUser);
 router.put("/updateUser", verifyUserToken, updateUser);
 
 // RequiredQuestion
-router.get("requiredQuestions", verifyUserToken, isUserPresent, getAllRequiredQuestion);
-router.get("requiredQuestions/:id", verifyUserToken, isUserPresent, getRequiredQuestion);
-router.post("attempQuestion", verifyUserToken, isUserPresent, attempQuestion);
-router.get("myResult", verifyUserToken, isUserPresent, getMyResult);
+router.get("/questions", verifyUserToken, isUserPresent, getAllRequiredQuestion);
+router.get("/questions/:id", verifyUserToken, isUserPresent, getRequiredQuestion);
+router.post("/attempQuestion", verifyUserToken, isUserPresent, attempQuestion);
+router.get("/myResult", verifyUserToken, isUserPresent, getMyResult);
 
 // Stock PortFolio
 router.post("/addStock", verifyUserToken, isUserPresent, isUserAttemptedAllQuestion, addStockPortfolio);
@@ -37,8 +37,8 @@ router.put("/updateMFund/:id", verifyUserToken, isUserPresent, isUserAttemptedAl
 router.delete("/deleteMFund/:id", verifyUserToken, isUserPresent, isUserAttemptedAllQuestion, softDeleteMFund);
 
 // Service
-router.get("services", verifyUserToken, isUserPresent, getAllService);
-router.get("services/:id", verifyUserToken, isUserPresent, isUserAttemptedAllQuestion, getService);
+router.get("/services", verifyUserToken, isUserPresent, getAllService);
+router.get("/services/:id", verifyUserToken, isUserPresent, isUserAttemptedAllQuestion, getService);
 
 // Purchase
 router.post("/createPayment/:id", verifyUserToken, isUserPresent, isUserAttemptedAllQuestion, createPayment);

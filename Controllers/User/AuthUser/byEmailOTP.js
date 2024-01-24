@@ -257,7 +257,7 @@ exports.signInByEmailOTP = async (req, res) => {
                 sendSmtpEmail.subject = "My Way SIP";
                 sendSmtpEmail.sender = { "name": "My Way SIP", "email": finaliseEmailCredential.email };
                 sendSmtpEmail.replyTo = { "email": finaliseEmailCredential.email, "name": "My Way SIP" };
-                sendSmtpEmail.headers = { "OTP for regenerate password": isUser.userCode };
+                sendSmtpEmail.headers = { "OTP for regenerate password": "1111111" };
                 sendSmtpEmail.htmlContent = `OTP ${otp} Expires in ${parseInt(FORGET_OTP_VALIDITY) / 1000 / 60} minutes!`;
                 sendSmtpEmail.to = [
                     { "email": email, "name": user.name }
@@ -428,8 +428,7 @@ exports.updateUser = async (req, res) => {
         });
         res.status(200).send({
             success: true,
-            message: `User updated successfully!`,
-            data: user
+            message: `User updated successfully!`
         });
     } catch (err) {
         res.status(500).send({

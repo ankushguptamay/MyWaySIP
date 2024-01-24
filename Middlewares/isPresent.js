@@ -5,13 +5,6 @@ const { Op } = require("sequelize")
 const RequiredQuestion = db.requiredQuestion;
 const RequiredQuestionAnswer = db.questionAnswer;
 
-const checkAttemp = async (question, userAnswer) => {
-    for (let i = 0; i < question.length; i++) {
-
-    }
-    return response;
-}
-
 exports.isAdminPresent = async (req, res, next) => {
     try {
         const admin = await Admin.findOne({
@@ -41,7 +34,7 @@ exports.isUserPresent = async (req, res, next) => {
         const user = await User.findOne({
             where: {
                 [Op.and]: [
-                    { id: req.admin.id }, { email: req.admin.email }
+                    { id: req.user.id }, { email: req.user.email }
                 ]
             }
         });
