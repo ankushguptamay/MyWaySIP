@@ -71,7 +71,7 @@ db.questionResult.belongsTo(db.user, { foreignKey: "userId", as: "user" });
 //         db.emailCredential.create({
 //             email: "morarjidesai19@gmail.com",
 //             plateForm: "BREVO",
-//             EMAIL_API_KEY: "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"
+//             EMAIL_API_KEY: ""
 //         });
 //     }
 // }).catch((err) => { console.log(err) });
