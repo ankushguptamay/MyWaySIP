@@ -51,6 +51,17 @@ exports.updateService = (data) => {
     return schema.validate(data);
 }
 
+exports.getUser = (data) => {
+    const schema = joi.object().keys({
+        page: joi.string().optional(),
+        limit: joi.string().optional(),
+        search: joi.string().optional(),
+        serviceId: joi.string().optional(),
+        paid: joi.boolean().optional()
+    });
+    return schema.validate(data);
+}
+
 exports.createRequiredQuestion = (data) => {
     const schema = joi.object().keys({
         questionTitle: joi.string().required(),
@@ -61,7 +72,7 @@ exports.createRequiredQuestion = (data) => {
     return schema.validate(data);
 }
 
-exports.attempQuestion = (data) => {
+exports.attemptQuestion = (data) => {
     const schema = joi.object().keys({
         answers: joi.array().required()
     });

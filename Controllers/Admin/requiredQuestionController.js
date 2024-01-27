@@ -2,7 +2,7 @@ const db = require('../../Models');
 const RequiredQuestion = db.requiredQuestion;
 const RequiredQuestionAnswer = db.questionAnswer;
 const Result = db.questionResult;
-const { createRequiredQuestion, attempQuestion } = require("../../Middlewares/Validation/validateAdmin");
+const { createRequiredQuestion, attemptQuestion } = require("../../Middlewares/Validation/validateAdmin");
 
 const checkResults = async (question, userAnswer) => {
     let num = 0;
@@ -96,7 +96,7 @@ exports.getRequiredQuestion = async (req, res) => {
     }
 };
 
-exports.attempQuestion = async (req, res) => {
+exports.attemptQuestion = async (req, res) => {
     try {
         // const answers = [{
         //     questionId: "",
@@ -105,7 +105,7 @@ exports.attempQuestion = async (req, res) => {
         //     questionId: "",
         //     answer: "b"
         // }]
-        const { error } = attempQuestion(req.body);
+        const { error } = attemptQuestion(req.body);
         if (error) {
             return res.status(400).json(error.details[0].message);
         }
@@ -129,11 +129,24 @@ exports.attempQuestion = async (req, res) => {
         const adminQuestion = await RequiredQuestion.findAll();
         const userAnswer = await RequiredQuestionAnswer.findAll({ where: { userId: req.user.id } });
         const response = await checkResults(adminQuestion, userAnswer);
-        await Result.create({
-            result: response.result,
-            obtainPoints: response.point,
-            userId: req.user.id
+        const result = await Result.findOne({
+            where: {
+                userId: req.user.id
+            }
         });
+        if (!result) {
+            await Result.create({
+                result: response.result,
+                obtainPoints: response.point,
+                userId: req.user.id
+            });
+        } else {
+            await result.update({
+                ...result,
+                result: response.result,
+                obtainPoints: response.point,
+            });
+        }
         res.status(200).send({
             success: true,
             message: `Answer submited successfully!`

@@ -6,3 +6,17 @@ curl --location 'http://localhost:8080/api/user/services' \
 // get Service by ID, In this route user profile should be complete and required questions alson attemp
 curl --location 'http://localhost:8080/api/user/services/:id' \
 --header 'Authorization: Bearer authToken'
+
+Question
+curl --location 'http://localhost:8080/api/user/attempQuestion' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer authToken' \
+--data '{
+          "answers": [{
+            "questionId": "0d620dbd-2f08-4975-9e5a-79aee9a47369",
+            "answer": "a"
+        }, {
+            "questionId": "1e79bb21-dd1b-4524-9167-c0c560b476e7",
+            "answer": "b"
+        }]
+}'

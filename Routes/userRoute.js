@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const { registerByEmailOTP, verifyOTP, signInByEmailOTP, updateUser, getUser } = require('../Controllers/User/AuthUser/byEmailOTP');
-const { getAllRequiredQuestion, getRequiredQuestion, attempQuestion, getMyResult } = require('../Controllers/Admin/requiredQuestionController');
+const { getAllRequiredQuestion, getRequiredQuestion, attemptQuestion, getMyResult } = require('../Controllers/Admin/requiredQuestionController');
 const { getAllService, getService } = require('../Controllers/Admin/myServiceController');
 const { getMyMFund, addMFund, softDeleteMFund, updateMFund } = require('../Controllers/User/mFundController');
 const { createPayment, verifyPayment } = require('../Controllers/User/user_serviceController');
@@ -21,7 +21,7 @@ router.put("/updateUser", verifyUserToken, updateUser);
 // RequiredQuestion
 router.get("/questions", verifyUserToken, isUserPresent, getAllRequiredQuestion);
 router.get("/questions/:id", verifyUserToken, isUserPresent, getRequiredQuestion);
-router.post("/attempQuestion", verifyUserToken, isUserPresent, attempQuestion);
+router.post("/attemptQuestion", verifyUserToken, isUserPresent, attemptQuestion);
 router.get("/myResult", verifyUserToken, isUserPresent, getMyResult);
 
 // Stock PortFolio

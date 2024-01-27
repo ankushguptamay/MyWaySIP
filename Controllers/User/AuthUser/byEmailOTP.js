@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken');
 const { Op } = require('sequelize');
 const { OTP_VALIDITY_IN_MILLISECONDS, OTP_DIGITS_LENGTH, JWT_SECRET_KEY_USER, JWT_VALIDITY } = process.env;
 const { registerByEmailOTP, verifyOTP, signInByEmailOTP, updateUser } = require("../../../Middlewares/Validation/validationUser");
+const { getUser } = require("../../../Middlewares/Validation/validateAdmin");
 
 const FORGET_OTP_VALIDITY = (OTP_VALIDITY_IN_MILLISECONDS) ? OTP_VALIDITY_IN_MILLISECONDS : '600000';
 const OTP_LENGTH = (OTP_DIGITS_LENGTH) ? OTP_DIGITS_LENGTH : 6;
@@ -295,7 +296,13 @@ exports.signInByEmailOTP = async (req, res) => {
 
 exports.allUserForAdmin = async (req, res) => {
     try {
-        const { page, limit, search } = req.query;
+        // Validate body
+        const { error } = getUser(req.query);
+        if (error) {
+            return res.status(400).send(error.details[0].message);
+        }
+        const { page, limit, search, serviceId, paid } = req.query;
+        const isPaid = paid ? paid : false;
         // Pagination
         const recordLimit = parseInt(limit) || 10;
         let offSet = 0;
@@ -314,6 +321,31 @@ exports.allUserForAdmin = async (req, res) => {
                     { email: { [Op.substring]: search } }
                 ]
             })
+        }
+        // Only paid User
+        if (isPaid === true) {
+            const usersId = [];
+            let allSuccessPayment;
+            if (serviceId) {
+                allSuccessPayment = await User_Service.findAll({
+                    where: {
+                        serviceId: serviceId,
+                        status: "Paid",
+                        verify: true
+                    }
+                });
+            } else {
+                allSuccessPayment = await User_Service.findAll({
+                    where: {
+                        status: "Paid",
+                        verify: true
+                    }
+                });
+            }
+            for (let i = 0; i < allSuccessPayment.length; i++) {
+                usersId.push(allSuccessPayment[i].userId);
+            }
+            condition.push({ id: usersId });
         }
         // Count All User
         const totalUser = await User.count({

@@ -2,12 +2,13 @@ const express = require("express");
 const router = express.Router();
 
 const { registerAdmin, loginAdmin, changePassword, updateAdminName, getAdmin } = require('../Controllers/Admin/adminController');
+const { totalNewUser, totalNonPaidUser, totalPaidUser, totalUser } = require('../Controllers/Admin/dashboardController');
 const { getAllRequiredQuestion, getRequiredQuestion, createRequiredQuestion, getUserResult } = require('../Controllers/Admin/requiredQuestionController');
 const { getAllService, getService, updateService, createService } = require('../Controllers/Admin/myServiceController');
 const { getStockPortfolioForAdmin } = require('../Controllers/User/stockPortfolioController');
 const { allUserForAdmin, userForAdmin } = require('../Controllers/User/AuthUser/byEmailOTP');
 const { getMFundForAdmin } = require('../Controllers/User/mFundController');
-const { allUserPaidForAdmin } = require('../Controllers/User/user_serviceController');
+const { getPaymentForAdmin } = require('../Controllers/User/user_serviceController');
 const { getAllNotification, changeSeenStatus, getNotification } = require('../Controllers/Admin/notificationController');
 
 //middleware
@@ -35,8 +36,6 @@ router.get("/userResult/:id", verifyAdminToken, isAdminPresent, getUserResult);
 // User
 router.get("/users", verifyAdminToken, isAdminPresent, allUserForAdmin);
 router.get("/users/:id", verifyAdminToken, isAdminPresent, userForAdmin);
-// Paid User
-router.get("/paidUsers", verifyAdminToken, isAdminPresent, allUserPaidForAdmin);
 
 // Stock PortFolio
 router.get("/stockPortfolio/:id", verifyAdminToken, isAdminPresent, getStockPortfolioForAdmin); // id= user id
@@ -48,5 +47,14 @@ router.get("/mFunds/:id", verifyAdminToken, isAdminPresent, getMFundForAdmin); /
 router.get("/notifications", verifyAdminToken, isAdminPresent, getAllNotification);
 router.get("/notifications/:id", verifyAdminToken, isAdminPresent, getNotification);
 router.put("/changeSeenStatus/:id", verifyAdminToken, isAdminPresent, changeSeenStatus);
+
+// Dashboard
+router.get("/totalNewUser", verifyAdminToken, isAdminPresent, totalNewUser);
+router.get("/totalNonPaidUser", verifyAdminToken, isAdminPresent, totalNonPaidUser);
+router.get("/totalPaidUser", verifyAdminToken, isAdminPresent, totalPaidUser);
+router.get("/totalUser", verifyAdminToken, isAdminPresent, totalUser);
+
+// Payment
+router.get("/payments", verifyAdminToken, isAdminPresent, getPaymentForAdmin);
 
 module.exports = router;

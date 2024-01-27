@@ -95,10 +95,16 @@ exports.isUserAttemptedAllQuestion = async (req, res, next) => {
                 ['questionId', 'ASC']
             ]
         });
+        if (userAnswer.length <= 0) {
+            return res.status(400).json({
+                success: false,
+                message: "Please attempt question!"
+            });
+        }
         if (adminQuestion.length !== userAnswer.length) {
             return res.status(400).json({
                 success: false,
-                message: "Please attempe all question!"
+                message: "Please attempt all question!"
             });
         }
         const questionIds = [];
@@ -113,7 +119,7 @@ exports.isUserAttemptedAllQuestion = async (req, res, next) => {
         if (check === false) {
             return res.status(400).json({
                 success: false,
-                message: "Please attempe all question!"
+                message: "Please attempt all question!"
             });
         }
         next();

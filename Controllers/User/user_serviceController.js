@@ -1,8 +1,6 @@
 const db = require('../../Models');
-const User = db.user;
 const User_Service = db.user_service;
 const crypto = require('crypto');
-const Service = db.service;
 const { createPayment } = require("../../Middlewares/Validation/validationUser");
 const { RAZORPAY_KEY_ID, RAZORPAY_SECRET_ID } = process.env;
 const { Op } = require('sequelize');
@@ -122,9 +120,10 @@ exports.verifyPayment = async (req, res) => {
     }
 };
 
-exports.allUserPaidForAdmin = async (req, res) => {
+
+exports.getPaymentForAdmin = async (req, res) => {
     try {
-        const { page, limit, search, serviceId } = req.query;
+        const { page, limit, search } = req.query;
         // Pagination
         const recordLimit = parseInt(limit) || 10;
         let offSet = 0;
@@ -138,42 +137,18 @@ exports.allUserPaidForAdmin = async (req, res) => {
         if (search) {
             condition.push({
                 [Op.or]: [
-                    { name: { [Op.substring]: search } },
-                    { mobileNumber: { [Op.substring]: search } },
-                    { email: { [Op.substring]: search } }
+                    { status: { [Op.substring]: search } },
+                    { verify: { [Op.substring]: search } }
                 ]
             })
         }
-        // Only paid User
-        const usersId = [];
-        let allSuccessPayment;
-        if (serviceId) {
-            allSuccessPayment = await User_Service.findAll({
-                where: {
-                    serviceId: serviceId,
-                    status: "Paid",
-                    verify: true
-                }
-            });
-        } else {
-            allSuccessPayment = await User_Service.findAll({
-                where: {
-                    status: "Paid",
-                    verify: true
-                }
-            });
-        }
-        for (let i = 0; i < allSuccessPayment.length; i++) {
-            usersId.push(allSuccessPayment[i].userId);
-        }
-        condition.push({ id: usersId });
-        // Count All User
-        const totalUser = await User.count({
+        // Count All Payment
+        const totalUser_Service = await User_Service.count({
             where: {
                 [Op.and]: condition
             }
         });
-        const user = await User.findAll({
+        const user_service = await User_Service.findAll({
             where: {
                 [Op.and]: condition
             },
@@ -185,10 +160,10 @@ exports.allUserPaidForAdmin = async (req, res) => {
         });
         res.status(200).send({
             success: true,
-            message: `Users fetched successfully!`,
-            totalPage: Math.ceil(totalUser / recordLimit),
+            message: `Payment fetched successfully!`,
+            totalPage: Math.ceil(totalUser_Service / recordLimit),
             currentPage: currentPage,
-            data: user
+            data: user_service
         });
     } catch (err) {
         res.status(500).send({
