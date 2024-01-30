@@ -51,10 +51,10 @@ exports.updateUser = (data) => {
 exports.addMFund = (data) => {
     const schema = joi.object().keys({
         mFSchemeName: joi.string().required(),
-        investedSIPAmount: joi.string().required(),
-        investedLumSumAmount: joi.string().required(),
-        investmentTypeSIP: joi.string().required(),
-        investmentTypeLumSum: joi.string().required(),
+        investedSIPAmount: joi.string().optional(),
+        investedLumSumAmount: joi.string().optional(),
+        investmentTypeSIP: joi.boolean().required(),
+        investmentTypeLumSum: joi.boolean().required(),
         currentMarketValue: joi.string().required(),
         currentMFundValue: joi.string().required(),
         investmentDate: joi.string().required()

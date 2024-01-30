@@ -15,10 +15,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING
         },
         investmentTypeSIP: {
-            type: DataTypes.STRING
+            type: DataTypes.BOOLEAN
         },
         investmentTypeLumSum: {
-            type: DataTypes.STRING
+            type: DataTypes.BOOLEAN
         },
         currentMarketValue: {
             type: DataTypes.STRING

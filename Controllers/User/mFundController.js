@@ -18,6 +18,26 @@ exports.addMFund = async (req, res) => {
             return res.status(400).json(error.details[0].message);
         }
         const { mFSchemeName, investedSIPAmount, investedLumSumAmount, investmentTypeSIP, investmentTypeLumSum, currentMarketValue, currentMFundValue, investmentDate } = req.body;
+        if (investmentTypeSIP === true && investmentTypeLumSum === false) {
+            if (!investedSIPAmount) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Investment SIP Amount should be present!'
+                });
+            }
+        } else if (investmentTypeSIP === false && investmentTypeLumSum === true) {
+            if (!investedLumSumAmount) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Investment LumSum Amount should be present!'
+                });
+            }
+        } else {
+            return res.status(400).json({
+                success: false,
+                message: 'Required field should be present!'
+            });
+        }
         await MutualFund.create({
             mFSchemeName: mFSchemeName,
             investedLumSumAmount: investedLumSumAmount,

@@ -47,7 +47,7 @@ db.stockPortfolio.hasMany(db.previousStockPortfolio, { foreignKey: "stockId", as
 
 db.user.hasMany(db.previousMFund, { foreignKey: "userId", as: "previousMFunds" });
 
-db.stockPortfolio.hasMany(db.previousMFund, { foreignKey: "stockId", as: "previousMFunds" });
+db.mFund.hasMany(db.previousMFund, { foreignKey: "mFundId", as: "previousMFunds" });
 
 // Question Answer
 db.user.hasMany(db.questionAnswer, { foreignKey: "userId", as: "answers" });

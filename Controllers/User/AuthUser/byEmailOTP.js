@@ -2,6 +2,7 @@ const db = require('../../../Models');
 const User = db.user;
 const EmailOTP = db.emailOTP;
 const EmailCredential = db.emailCredential
+const User_Service = db.user_service;
 
 const jwt = require('jsonwebtoken');
 const { Op } = require('sequelize');
@@ -323,7 +324,7 @@ exports.allUserForAdmin = async (req, res) => {
             })
         }
         // Only paid User
-        if (isPaid === true) {
+        if (isPaid) {
             const usersId = [];
             let allSuccessPayment;
             if (serviceId) {

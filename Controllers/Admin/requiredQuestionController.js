@@ -6,7 +6,7 @@ const { createRequiredQuestion, attemptQuestion } = require("../../Middlewares/V
 
 const checkResults = async (question, userAnswer) => {
     let num = 0;
-    let result = "Balanced"; // "Conservative", "Aggresive"
+    let result;
     for (let i = 0; i < userAnswer.length; i++) {
         const attemptQuestionId = userAnswer[i].questionId;
         for (let j = 0; j < question.length; j++) {
@@ -21,6 +21,13 @@ const checkResults = async (question, userAnswer) => {
                 }
             }
         }
+    }
+    if (num <= 15) {
+        result = "Conservative";
+    } else if (num > 15 && num <= 25) {
+        result = "Balanced";
+    } else {
+        result = "Aggresive";
     }
     let response = {
         point: num,
