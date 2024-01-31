@@ -30,6 +30,7 @@ exports.addStockPortfolio = (data) => {
         investmentDate: joi.string().required(),
         buyingPrice: joi.string().required(),
         currentMarketValue: joi.string().required(),
+        shareQuantity: joi.string().required(),
         exitDate: joi.string().optional()
     });
     return schema.validate(data);

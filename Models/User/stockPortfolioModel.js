@@ -17,6 +17,9 @@ module.exports = (sequelize, DataTypes) => {
         currentMarketValue: {
             type: DataTypes.STRING
         },
+        shareQuantity: {
+            type: DataTypes.INTEGER
+        },
         exitDate: {
             type: DataTypes.DATEONLY
         }

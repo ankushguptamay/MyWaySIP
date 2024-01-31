@@ -17,12 +17,13 @@ exports.addStockPortfolio = async (req, res) => {
         if (error) {
             return res.status(400).json(error.details[0].message);
         }
-        const { stockName, buyingPrice, investmentDate, currentMarketValue } = req.body;
+        const { stockName, buyingPrice, investmentDate, currentMarketValue, shareQuantity } = req.body;
         await StockPortfolio.create({
             stockName: stockName,
             buyingPrice: buyingPrice,
             currentMarketValue: currentMarketValue,
             investmentDate: investmentDate,
+            shareQuantity: parseInt(shareQuantity),
             userId: req.user.id
         });
         res.status(200).json({
@@ -83,7 +84,7 @@ exports.updateStockPortfolio = async (req, res) => {
         if (error) {
             return res.status(400).json(error.details[0].message);
         }
-        const { stockName, buyingPrice, investmentDate, currentMarketValue, exitDate } = req.body;
+        const { stockName, buyingPrice, investmentDate, currentMarketValue, exitDate, shareQuantity } = req.body;
         const stock = await StockPortfolio.findOne({
             where: {
                 id: req.params.id,
@@ -104,6 +105,7 @@ exports.updateStockPortfolio = async (req, res) => {
             currentMarketValue: stock.currentMarketValue,
             exitDate: stock.exitDate,
             stockId: stock.id,
+            shareQuantity: stock.shareQuantity,
             userId: req.user.id
         });
         // Update Stock
@@ -113,6 +115,7 @@ exports.updateStockPortfolio = async (req, res) => {
             buyingPrice: buyingPrice,
             investmentDate: investmentDate,
             currentMarketValue: currentMarketValue,
+            shareQuantity: parseInt(shareQuantity),
             exitDate: exitDate
         });
         // Create notification for admin

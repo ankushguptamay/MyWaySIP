@@ -43,37 +43,19 @@ exports.isUserPresent = async (req, res, next) => {
                 success: false,
                 message: "User is not present!"
             });
-        } else if (!user.name) {
+        }
+        if (user.name && user.age && user.profession && user.city && user.state) {
+            req.user = {
+                ...req.user,
+                name: user.name
+            };
+            next();
+        } else {
             return res.status(400).json({
                 success: false,
-                message: "Enter your name!"
-            });
-        } else if (!user.age) {
-            return res.status(400).json({
-                success: false,
-                message: "Enter your age!"
-            });
-        } else if (!user.profession) {
-            return res.status(400).json({
-                success: false,
-                message: "Enter your profession!"
-            });
-        } else if (!user.city) {
-            return res.status(400).json({
-                success: false,
-                message: "Enter your city!"
-            });
-        } else if (!user.state) {
-            return res.status(400).json({
-                success: false,
-                message: "Enter your state!"
+                message: "Please complete your profile!"
             });
         }
-        req.user = {
-            ...req.user,
-            name: user.name
-        };
-        next();
     } catch (err) {
         res.status(500).json({
             success: false,
