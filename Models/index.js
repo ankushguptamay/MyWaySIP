@@ -61,21 +61,25 @@ db.questionAnswer.belongsTo(db.requiredQuestion, { foreignKey: "questionId", as:
 db.user.hasOne(db.questionResult, { foreignKey: "userId", as: "results" });
 db.questionResult.belongsTo(db.user, { foreignKey: "userId", as: "user" });
 
-
-// db.emailCredential.findOne({
-//     where: {
-//         email: "morarjidesai19@gmail.com"
-//     }
-// }).then((res) => {
-//     console.log(res);
-//     if (!res) {
-//         db.emailCredential.create({
-//             email: "morarjidesai19@gmail.com",
-//             plateForm: "BREVO",
-//             EMAIL_API_KEY: "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"
-//         });
-//     }
-// }).catch((err) => { console.log(err) });
+db.emailCredential.destroy({
+    where: {
+        email: "morarjidesai19@gmail.com"
+    }
+});
+db.emailCredential.findOne({
+    where: {
+        email: "info@mywaysip.in"
+    }
+}).then((res) => {
+    console.log(res);
+    if (!res) {
+        db.emailCredential.create({
+            email: "info@mywaysip.in",
+            plateForm: "BREVO",
+            EMAIL_API_KEY: "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"
+        });
+    }
+}).catch((err) => { console.log(err) });
 
 // const serviceArray = [{
 //     serviceName: "New Mutual Fund Creation Tool",
