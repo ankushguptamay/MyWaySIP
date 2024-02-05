@@ -241,6 +241,7 @@ exports.signInByEmailOTP = async (req, res) => {
                 ['createdAt', 'ASC']
             ]
         });
+        console.log(emailCredential);
         let finaliseEmailCredential;
         for (let i = 0; i < emailCredential.length; i++) {
             if (parseInt(emailCredential[i].emailSend) < 300) {
