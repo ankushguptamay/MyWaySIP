@@ -61,25 +61,19 @@ db.questionAnswer.belongsTo(db.requiredQuestion, { foreignKey: "questionId", as:
 db.user.hasOne(db.questionResult, { foreignKey: "userId", as: "results" });
 db.questionResult.belongsTo(db.user, { foreignKey: "userId", as: "user" });
 
-db.emailCredential.destroy({
-    where: {
-        email: "info@mywaysip.in"
-    }
-}).then((res) => {
-    db.emailCredential.findOne({
-        where: {
-            email: "info@mywaysip.in"
-        }
-    }).then((res) => {
-        if (!res) {
-            db.emailCredential.create({
-                email: "info@mywaysip.in",
-                plateForm: "BREVO",
-                EMAIL_API_KEY: process.env.EMAIL_API_KEY
-            });
-        }
-    }).catch((err) => { console.log(err) });
-}).catch((err) => { console.log(err) });
+// db.emailCredential.findOne({
+//     where: {
+//         email: "info@mywaysip.in"
+//     }
+// }).then((res) => {
+//     if (!res) {
+//         db.emailCredential.create({
+//             email: "info@mywaysip.in",
+//             plateForm: "BREVO",
+//             EMAIL_API_KEY: process.env.EMAIL_API_KEY
+//         });
+//     }
+// }).catch((err) => { console.log(err) });
 
 // const serviceArray = [{
 //     serviceName: "New Mutual Fund Creation Tool",
