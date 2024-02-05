@@ -20,6 +20,7 @@ db.sequelize = sequelize;
 // Admin
 db.admin = require('./Admin/adminModel.js')(sequelize, Sequelize);
 db.requiredQuestion = require('./Admin/requireQuestionController.js')(sequelize, Sequelize);
+db.analysisReport = require('./Admin/analysisReportModel.js')(sequelize, Sequelize);
 db.service = require('./Admin/myServiceModel.js')(sequelize, Sequelize);
 db.adminNotification = require('./Admin/adminNotificationModel.js')(sequelize, Sequelize);
 db.emailCredential = require('./Admin/emailCredentialsModel.js')(sequelize, Sequelize);
@@ -87,6 +88,9 @@ db.questionResult.belongsTo(db.user, { foreignKey: "userId", as: "user" });
 //     price: "100"
 // }, {
 //     serviceName: "Technical Analysis Tool For Stocks",
+//     price: "100"
+// },{
+//     serviceName: "Portfolio Management Service",
 //     price: "100"
 // }]
 // for (let i = 0; i < serviceArray.length; i++) {
