@@ -63,22 +63,22 @@ db.questionResult.belongsTo(db.user, { foreignKey: "userId", as: "user" });
 
 // db.emailCredential.destroy({
 //     where: {
-//         email: "morarjidesai19@gmail.com"
-//     }
-// });
-// db.emailCredential.findOne({
-//     where: {
 //         email: "info@mywaysip.in"
 //     }
 // }).then((res) => {
-//     console.log(res);
-//     if (!res) {
-//         db.emailCredential.create({
-//             email: "info@mywaysip.in",
-//             plateForm: "BREVO",
-//             EMAIL_API_KEY: ""
-//         });
-//     }
+//     db.emailCredential.findOne({
+//         where: {
+//             email: "info@mywaysip.in"
+//         }
+//     }).then((res) => {
+//         if (!res) {
+//             db.emailCredential.create({
+//                 email: "info@mywaysip.in",
+//                 plateForm: "BREVO",
+//                 EMAIL_API_KEY: process.env.EMAIL_API_KEY
+//             });
+//         }
+//     }).catch((err) => { console.log(err) });
 // }).catch((err) => { console.log(err) });
 
 // const serviceArray = [{
