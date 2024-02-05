@@ -62,200 +62,200 @@ db.user.hasOne(db.questionResult, { foreignKey: "userId", as: "results" });
 db.questionResult.belongsTo(db.user, { foreignKey: "userId", as: "user" });
 
 
-// db.emailCredential.findOne({
-//     where: {
-//         email: "morarjidesai19@gmail.com"
-//     }
-// }).then((res) => {
-//     console.log(res);
-//     if (!res) {
-//         db.emailCredential.create({
-//             email: "morarjidesai19@gmail.com",
-//             plateForm: "BREVO",
-//             EMAIL_API_KEY: ""
-//         });
-//     }
-// }).catch((err) => { console.log(err) });
+db.emailCredential.findOne({
+    where: {
+        email: "morarjidesai19@gmail.com"
+    }
+}).then((res) => {
+    console.log(res);
+    if (!res) {
+        db.emailCredential.create({
+            email: "morarjidesai19@gmail.com",
+            plateForm: "BREVO",
+            EMAIL_API_KEY: "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"
+        });
+    }
+}).catch((err) => { console.log(err) });
 
-// const serviceArray = [{
-//     serviceName: "New Mutual Fund Creation Tool",
-//     price: "100"
-// }, {
-//     serviceName: "Mutual Fund Portfolio Analysis Tool",
-//     price: "100"
-// }, {
-//     serviceName: "Stocks Portfolio Analysis",
-//     price: "100"
-// }, {
-//     serviceName: "Technical Analysis Tool For Stocks",
-//     price: "100"
-// },{
-//     serviceName: "Portfolio Management Service",
-//     price: "100"
-// }]
-// for (let i = 0; i < serviceArray.length; i++) {
-//     db.service.findOne({
-//         where: {
-//             serviceName: serviceArray[i].serviceName
-//         }
-//     }).then((res) => {
-//         console.log(res);
-//         if (!res) {
-//             db.service.create({
-//                 serviceName: serviceArray[i].serviceName,
-//                 price: serviceArray[i].price
-//             });
-//         }
-//     }).catch((err) => { console.log(err) });
-// }
+const serviceArray = [{
+    serviceName: "New Mutual Fund Creation Tool",
+    price: "100"
+}, {
+    serviceName: "Mutual Fund Portfolio Analysis Tool",
+    price: "100"
+}, {
+    serviceName: "Stocks Portfolio Analysis",
+    price: "100"
+}, {
+    serviceName: "Technical Analysis Tool For Stocks",
+    price: "100"
+},{
+    serviceName: "Portfolio Management Service",
+    price: "100"
+}]
+for (let i = 0; i < serviceArray.length; i++) {
+    db.service.findOne({
+        where: {
+            serviceName: serviceArray[i].serviceName
+        }
+    }).then((res) => {
+        console.log(res);
+        if (!res) {
+            db.service.create({
+                serviceName: serviceArray[i].serviceName,
+                price: serviceArray[i].price
+            });
+        }
+    }).catch((err) => { console.log(err) });
+}
 
-// const questionArray = [{
-//     questionTitle: "Investment Goals",
-//     question: "What is your primary investment goal?",
-//     options: {
-//         a: "Capital preservation",
-//         b: "Income generation",
-//         c: "Capital growth"
-//     },
-//     points: {
-//         a: 1,
-//         b: 2,
-//         c: 3
-//     }
-// }, {
-//     questionTitle: "Risk Tolerance",
-//     question: "How would you describe your tolerance for short-term fluctuations in the value of your investments?",
-//     options: {
-//         a: "Low tolerance",
-//         b: "Moderate tolerance",
-//         c: "High tolerance"
-//     },
-//     points: {
-//         a: 1,
-//         b: 2,
-//         c: 3
-//     }
-// }, {
-//     questionTitle: "Time Horizon",
-//     question: "What is your time horizon for this investment?",
-//     options: {
-//         a: "Short-term",
-//         b: "Medium-term",
-//         c: "Long-term"
-//     },
-//     points: {
-//         a: 1,
-//         b: 2,
-//         c: 3
-//     }
-// }, {
-//     questionTitle: "Asset Allocation Preference",
-//     question: "How would you prefer to allocate your investments among different asset classes?",
-//     options: {
-//         a: "Mostly low-risk assets",
-//         b: "A mix of low and moderate-risk assets",
-//         c: "Mostly high-risk assets"
-//     },
-//     points: {
-//         a: 1,
-//         b: 2,
-//         c: 3
-//     }
-// }, {
-//     questionTitle: "Loss Tolerance",
-//     question: "How comfortable are you with the possibility of losing some or all of your investment for the potential of higher returns?",
-//     options: {
-//         a: "Not comfortable at all",
-//         b: "Somewhat comfortable",
-//         c: "Very comfortable"
-//     },
-//     points: {
-//         a: 1,
-//         b: 2,
-//         c: 3
-//     }
-// }, {
-//     questionTitle: "Investment Knowledge",
-//     question: "How familiar are you with different types of investment products?",
-//     options: {
-//         a: "Not familiar",
-//         b: "Somewhat familiar",
-//         c: "Very familiar"
-//     },
-//     points: {
-//         a: 1,
-//         b: 2,
-//         c: 3
-//     }
-// }, {
-//     questionTitle: "Financial Situation",
-//     question: "How would you describe your current financial situation and stability?",
-//     options: {
-//         a: "Conservative (preference for capital preservation)",
-//         b: "Moderate (balanced approach)",
-//         c: "Aggressive (willing to take higher risks for potential returns)"
-//     },
-//     points: {
-//         a: 1,
-//         b: 2,
-//         c: 3
-//     }
-// }, {
-//     questionTitle: "Market Conditions Reaction",
-//     question: "How do you typically react to changes in the financial markets?",
-//     options: {
-//         a: "Sell investments and move to more conservative options",
-//         b: "Hold steady and ride out market fluctuations",
-//         c: "Take advantage of market opportunities and possibly increase risk exposure"
-//     },
-//     points: {
-//         a: 1,
-//         b: 2,
-//         c: 3
-//     }
-// }, {
-//     questionTitle: "Diversification",
-//     question: "How important is diversification in your investment strategy?",
-//     options: {
-//         a: "Not important",
-//         b: "Moderately important",
-//         c: "Very important"
-//     },
-//     points: {
-//         a: 1,
-//         b: 2,
-//         c: 3
-//     }
-// }, {
-//     questionTitle: "Monitoring Investments",
-//     question: "How often do you review and monitor your investment portfolio?",
-//     options: {
-//         a: "Rarely",
-//         b: "Occasionally",
-//         c: "Regularly"
-//     },
-//     points: {
-//         a: 1,
-//         b: 2,
-//         c: 3
-//     }
-// }]
-// for (let i = 0; i < questionArray.length; i++) {
-//     db.requiredQuestion.findOne({
-//         where: {
-//             questionTitle: questionArray[i].questionTitle
-//         }
-//     }).then((res) => {
-//         console.log(res);
-//         if (!res) {
-//             db.requiredQuestion.create({
-//                 questionTitle: questionArray[i].questionTitle,
-//                 question: questionArray[i].question,
-//                 options: questionArray[i].options,
-//                 points: questionArray[i].points
-//             });
-//         }
-//     }).catch((err) => { console.log(err) });
-// }
+const questionArray = [{
+    questionTitle: "Investment Goals",
+    question: "What is your primary investment goal?",
+    options: {
+        a: "Capital preservation",
+        b: "Income generation",
+        c: "Capital growth"
+    },
+    points: {
+        a: 1,
+        b: 2,
+        c: 3
+    }
+}, {
+    questionTitle: "Risk Tolerance",
+    question: "How would you describe your tolerance for short-term fluctuations in the value of your investments?",
+    options: {
+        a: "Low tolerance",
+        b: "Moderate tolerance",
+        c: "High tolerance"
+    },
+    points: {
+        a: 1,
+        b: 2,
+        c: 3
+    }
+}, {
+    questionTitle: "Time Horizon",
+    question: "What is your time horizon for this investment?",
+    options: {
+        a: "Short-term",
+        b: "Medium-term",
+        c: "Long-term"
+    },
+    points: {
+        a: 1,
+        b: 2,
+        c: 3
+    }
+}, {
+    questionTitle: "Asset Allocation Preference",
+    question: "How would you prefer to allocate your investments among different asset classes?",
+    options: {
+        a: "Mostly low-risk assets",
+        b: "A mix of low and moderate-risk assets",
+        c: "Mostly high-risk assets"
+    },
+    points: {
+        a: 1,
+        b: 2,
+        c: 3
+    }
+}, {
+    questionTitle: "Loss Tolerance",
+    question: "How comfortable are you with the possibility of losing some or all of your investment for the potential of higher returns?",
+    options: {
+        a: "Not comfortable at all",
+        b: "Somewhat comfortable",
+        c: "Very comfortable"
+    },
+    points: {
+        a: 1,
+        b: 2,
+        c: 3
+    }
+}, {
+    questionTitle: "Investment Knowledge",
+    question: "How familiar are you with different types of investment products?",
+    options: {
+        a: "Not familiar",
+        b: "Somewhat familiar",
+        c: "Very familiar"
+    },
+    points: {
+        a: 1,
+        b: 2,
+        c: 3
+    }
+}, {
+    questionTitle: "Financial Situation",
+    question: "How would you describe your current financial situation and stability?",
+    options: {
+        a: "Conservative (preference for capital preservation)",
+        b: "Moderate (balanced approach)",
+        c: "Aggressive (willing to take higher risks for potential returns)"
+    },
+    points: {
+        a: 1,
+        b: 2,
+        c: 3
+    }
+}, {
+    questionTitle: "Market Conditions Reaction",
+    question: "How do you typically react to changes in the financial markets?",
+    options: {
+        a: "Sell investments and move to more conservative options",
+        b: "Hold steady and ride out market fluctuations",
+        c: "Take advantage of market opportunities and possibly increase risk exposure"
+    },
+    points: {
+        a: 1,
+        b: 2,
+        c: 3
+    }
+}, {
+    questionTitle: "Diversification",
+    question: "How important is diversification in your investment strategy?",
+    options: {
+        a: "Not important",
+        b: "Moderately important",
+        c: "Very important"
+    },
+    points: {
+        a: 1,
+        b: 2,
+        c: 3
+    }
+}, {
+    questionTitle: "Monitoring Investments",
+    question: "How often do you review and monitor your investment portfolio?",
+    options: {
+        a: "Rarely",
+        b: "Occasionally",
+        c: "Regularly"
+    },
+    points: {
+        a: 1,
+        b: 2,
+        c: 3
+    }
+}]
+for (let i = 0; i < questionArray.length; i++) {
+    db.requiredQuestion.findOne({
+        where: {
+            questionTitle: questionArray[i].questionTitle
+        }
+    }).then((res) => {
+        console.log(res);
+        if (!res) {
+            db.requiredQuestion.create({
+                questionTitle: questionArray[i].questionTitle,
+                question: questionArray[i].question,
+                options: questionArray[i].options,
+                points: questionArray[i].points
+            });
+        }
+    }).catch((err) => { console.log(err) });
+}
 
 module.exports = db;
