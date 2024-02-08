@@ -3,6 +3,7 @@ const User = db.user;
 const EmailOTP = db.emailOTP;
 const EmailCredential = db.emailCredential
 const User_Service = db.user_service;
+const ProfileImage = db.profileImage;
 
 const jwt = require('jsonwebtoken');
 const { Op } = require('sequelize');
@@ -241,7 +242,6 @@ exports.signInByEmailOTP = async (req, res) => {
                 ['createdAt', 'ASC']
             ]
         });
-        console.log(emailCredential);
         let finaliseEmailCredential;
         for (let i = 0; i < emailCredential.length; i++) {
             if (parseInt(emailCredential[i].emailSend) < 300) {
@@ -411,7 +411,11 @@ exports.getUser = async (req, res) => {
         const user = await User.findOne({
             where: {
                 id: req.user.id
-            }
+            },
+            include:[{
+                model:ProfileImage,
+                as:"profileImage"
+            }]
         });
         if (!user) {
             res.status(400).json({

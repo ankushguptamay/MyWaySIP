@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const { registerByEmailOTP, verifyOTP, signInByEmailOTP, updateUser, getUser } = require('../Controllers/User/AuthUser/byEmailOTP');
+const { addUpdateProfileImage } = require('../Controllers/User/AuthUser/userProfileImage');
 const { getAllRequiredQuestion, getRequiredQuestion, attemptQuestion, getMyResult } = require('../Controllers/Admin/requiredQuestionController');
 const { getAllService, getService } = require('../Controllers/Admin/myServiceController');
 const { getMyMFund, addMFund, softDeleteMFund, updateMFund } = require('../Controllers/User/mFundController');
@@ -9,6 +10,7 @@ const { createPayment, verifyPayment } = require('../Controllers/User/user_servi
 const { addStockPortfolio, getMyStockPortfolio, updateStockPortfolio, softDeleteStockPortfolio } = require('../Controllers/User/stockPortfolioController');
 
 //middleware
+const uploadImage = require("../Middlewares/uploadImages");
 const { verifyUserToken } = require('../Middlewares/verifyJWT');
 const { isUserPresent, isUserAttemptedAllQuestion } = require('../Middlewares/isPresent');
 
@@ -18,6 +20,8 @@ router.post("/login", signInByEmailOTP);
 router.get("/user", verifyUserToken, getUser);
 router.put("/updateUser", verifyUserToken, updateUser);
 
+// Profile Image
+router.post("/profileImage", verifyUserToken, uploadImage.single("profileImage"), addUpdateProfileImage);
 // RequiredQuestion
 router.get("/questions", verifyUserToken, isUserPresent, getAllRequiredQuestion);
 router.get("/questions/:id", verifyUserToken, isUserPresent, getRequiredQuestion);

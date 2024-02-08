@@ -57,7 +57,7 @@ exports.addMFund = (data) => {
         investmentTypeSIP: joi.boolean().required(),
         investmentTypeLumSum: joi.boolean().required(),
         currentMarketValue: joi.string().required(),
-        currentMFundValue: joi.string().required(),
+        currentMFundValue: joi.string().optional(),
         investmentDate: joi.string().required()
     });
     return schema.validate(data);

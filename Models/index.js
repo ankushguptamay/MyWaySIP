@@ -26,6 +26,7 @@ db.adminNotification = require('./Admin/adminNotificationModel.js')(sequelize, S
 db.emailCredential = require('./Admin/emailCredentialsModel.js')(sequelize, Sequelize);
 // User
 db.user = require('./User/userModel.js')(sequelize, Sequelize);
+db.profileImage = require('./User/userProfileImageModel.js')(sequelize, Sequelize);
 db.questionAnswer = require('./User/requiredQuestionAnswerModel.js')(sequelize, Sequelize);
 db.questionResult = require('./User/requiredQuestionResultsModel.js')(sequelize, Sequelize);
 db.emailOTP = require('./User/emailOTPModel.js')(sequelize, Sequelize);
@@ -60,6 +61,9 @@ db.questionAnswer.belongsTo(db.requiredQuestion, { foreignKey: "questionId", as:
 // Question Answer
 db.user.hasOne(db.questionResult, { foreignKey: "userId", as: "results" });
 db.questionResult.belongsTo(db.user, { foreignKey: "userId", as: "user" });
+
+db.user.hasOne(db.profileImage, { foreignKey: "userId", as: "profileImage" });
+db.profileImage.belongsTo(db.user, { foreignKey: "userId", as: "user" });
 
 // db.emailCredential.findOne({
 //     where: {
