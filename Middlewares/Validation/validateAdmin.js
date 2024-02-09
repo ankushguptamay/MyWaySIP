@@ -78,3 +78,12 @@ exports.attemptQuestion = (data) => {
     });
     return schema.validate(data);
 }
+
+exports.submitAnalysisReport = (data) => {
+    const schema = joi.object().keys({
+        uploadDate: joi.string().required(),
+        userId: joi.string().required(),
+        serviceId: joi.string().required()
+    });
+    return schema.validate(data);
+}

@@ -8,6 +8,7 @@ const { getAllService, getService } = require('../Controllers/Admin/myServiceCon
 const { getMyMFund, addMFund, softDeleteMFund, updateMFund } = require('../Controllers/User/mFundController');
 const { createPayment, verifyPayment } = require('../Controllers/User/user_serviceController');
 const { addStockPortfolio, getMyStockPortfolio, updateStockPortfolio, softDeleteStockPortfolio } = require('../Controllers/User/stockPortfolioController');
+const { getReportForUser } = require('../Controllers/Admin/analysisReportController');
 
 //middleware
 const uploadImage = require("../Middlewares/uploadImages");
@@ -47,5 +48,8 @@ router.get("/services/:id", verifyUserToken, isUserPresent, isUserAttemptedAllQu
 // Purchase
 router.post("/createPayment/:id", verifyUserToken, isUserPresent, isUserAttemptedAllQuestion, createPayment);
 router.post("/verifyPayment", verifyPayment);
+
+// Analysis Report
+router.get("/reports", verifyUserToken, isUserPresent, getReportForUser);
 
 module.exports = router;
