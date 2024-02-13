@@ -82,47 +82,43 @@ db.profileImage.belongsTo(db.user, { foreignKey: "userId", as: "user" });
 //     }
 // }).catch((err) => { console.log(err) });
 
-const serviceArray = [{
-    serviceName: "New Mutual Fund Creation Tool",
-    price: "100",
-    serviceCode: "AAA"
-}, {
-    serviceName: "Mutual Fund Portfolio Analysis Tool",
-    price: "100",
-    serviceCode: "BBB"
-}, {
-    serviceName: "Stocks Portfolio Analysis",
-    price: "100",
-    serviceCode: "CCC"
-}, {
-    serviceName: "Technical Analysis Tool For Stocks",
-    price: "100",
-    serviceCode: "DDD"
-}, {
-    serviceName: "Portfolio Management Service",
-    price: "100",
-    serviceCode: "EEE"
-}]
-for (let i = 0; i < serviceArray.length; i++) {
-    db.service.findOne({
-        where: {
-            serviceName: serviceArray[i].serviceName
-        }
-    }).then((res) => {
-        console.log(res);
-        if (res) {
-            db.service.update({
-                serviceName: serviceArray[i].serviceName,
-                price: serviceArray[i].price,
-                serviceCode: serviceArray[i].serviceCode
-            }, {
-                where: {
-                    serviceName: serviceArray[i].serviceName
-                }
-            });
-        }
-    }).catch((err) => { console.log(err) });
-}
+// const serviceArray = [{
+//     serviceName: "New Mutual Fund Creation Tool",
+//     price: "100",
+//     serviceCode: "AAA"
+// }, {
+//     serviceName: "Mutual Fund Portfolio Analysis Tool",
+//     price: "100",
+//     serviceCode: "BBB"
+// }, {
+//     serviceName: "Stocks Portfolio Analysis",
+//     price: "100",
+//     serviceCode: "CCC"
+// }, {
+//     serviceName: "Technical Analysis Tool For Stocks",
+//     price: "100",
+//     serviceCode: "DDD"
+// }, {
+//     serviceName: "Portfolio Management Service",
+//     price: "100",
+//     serviceCode: "EEE"
+// }]
+// for (let i = 0; i < serviceArray.length; i++) {
+//     db.service.findOne({
+//         where: {
+//             serviceName: serviceArray[i].serviceName
+//         }
+//     }).then((res) => {
+//         console.log(res);
+//         if (!res) {
+//             db.service.create({
+//                 serviceName: serviceArray[i].serviceName,
+//                 price: serviceArray[i].price,
+//                 serviceCode: serviceArray[i].serviceCode
+//             });
+//         }
+//     }).catch((err) => { console.log(err) });
+// }
 
 // const questionArray = [{
 //     questionTitle: "Investment Goals",
