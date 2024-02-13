@@ -68,40 +68,40 @@ db.questionResult.belongsTo(db.user, { foreignKey: "userId", as: "user" });
 db.user.hasOne(db.profileImage, { foreignKey: "userId", as: "profileImage" });
 db.profileImage.belongsTo(db.user, { foreignKey: "userId", as: "user" });
 
-db.emailCredential.findOne({
-    where: {
-        email: "info@mywaysip.in"
-    }
-}).then((res) => {
-    if (!res) {
-        db.emailCredential.create({
-            email: "info@mywaysip.in",
-            plateForm: "BREVO",
-            EMAIL_API_KEY: process.env.EMAIL_API_KEY
-        });
-    }
-}).catch((err) => { console.log(err) });
+// db.emailCredential.findOne({
+//     where: {
+//         email: "info@mywaysip.in"
+//     }
+// }).then((res) => {
+//     if (!res) {
+//         db.emailCredential.create({
+//             email: "info@mywaysip.in",
+//             plateForm: "BREVO",
+//             EMAIL_API_KEY: process.env.EMAIL_API_KEY
+//         });
+//     }
+// }).catch((err) => { console.log(err) });
 
 const serviceArray = [{
     serviceName: "New Mutual Fund Creation Tool",
     price: "100",
-    serviceCode:"AAA"
+    serviceCode: "AAA"
 }, {
     serviceName: "Mutual Fund Portfolio Analysis Tool",
     price: "100",
-    serviceCode:"BBB"
+    serviceCode: "BBB"
 }, {
     serviceName: "Stocks Portfolio Analysis",
     price: "100",
-    serviceCode:"CCC"
+    serviceCode: "CCC"
 }, {
     serviceName: "Technical Analysis Tool For Stocks",
     price: "100",
-    serviceCode:"DDD"
-},{
+    serviceCode: "DDD"
+}, {
     serviceName: "Portfolio Management Service",
     price: "100",
-    serviceCode:"EEE"
+    serviceCode: "EEE"
 }]
 for (let i = 0; i < serviceArray.length; i++) {
     db.service.findOne({
@@ -110,111 +110,116 @@ for (let i = 0; i < serviceArray.length; i++) {
         }
     }).then((res) => {
         console.log(res);
-        if (!res) {
-            db.service.create({
+        if (res) {
+            db.service.update({
                 serviceName: serviceArray[i].serviceName,
-                price: serviceArray[i].price
+                price: serviceArray[i].price,
+                serviceCode: serviceArray[i].serviceCode
+            }, {
+                where: {
+                    serviceName: serviceArray[i].serviceName
+                }
             });
         }
     }).catch((err) => { console.log(err) });
 }
 
-const questionArray = [{
-    questionTitle: "Investment Goals",
-    question: "What is your primary investment goal?",
-    options: {
-        a: "Capital preservation",
-        b: "Income generation",
-        c: "Capital growth"
-    },
-    points: {
-        a: 1,
-        b: 2,
-        c: 3
-    }
-}, {
-    questionTitle: "Time Horizon",
-    question: "What is your time horizon for this investment?",
-    options: {
-        a: "Short-term(Less than 1 year)",
-        b: "Medium-term(1 year- 3 years)",
-        c: "Long-term(More than 3 years)"
-    },
-    points: {
-        a: 1,
-        b: 2,
-        c: 3
-    }
-}, {
-    questionTitle: "Loss Tolerance",
-    question: "What can you handle as a temporary drop in your portfolio?",
-    options: {
-        a: "I can not take any portfolio drop",
-        b: "10-20%",
-        c: "20% or More"
-    },
-    points: {
-        a: 1,
-        b: 2,
-        c: 3
-    }
-}, {
-    questionTitle: "Investment Knowledge",
-    question: "What is your investment experience?",
-    options: {
-        a: "Have no experience investing",
-        b: "I have some experience investing",
-        c: "I am a professional investor"
-    },
-    points: {
-        a: 1,
-        b: 2,
-        c: 3
-    }
-}, {
-    questionTitle: "Financial Situation",
-    question: "How would you describe your current financial situation and stability?",
-    options: {
-        a: "I have limited assets and income",
-        b: "I have moderate assets and income",
-        c: "I have significant assets and income"
-    },
-    points: {
-        a: 1,
-        b: 2,
-        c: 3
-    }
-}, {
-    questionTitle: " Market Conditions Reaction",
-    question: "How do you typically react to changes in the financial markets?",
-    options: {
-        a: "Sell investments and move to more conservative options",
-        b: "Hold steady and ride out market fluctuations",
-        c: "Take advantage of market opportunities and possibly increase risk exposure"
-    },
-    points: {
-        a: 1,
-        b: 2,
-        c: 3
-    }
-}]
-for (let i = 0; i < questionArray.length; i++) {
-    db.requiredQuestion.findOne({
-        where: {
-            questionTitle: questionArray[i].questionTitle
-        }
-    }).then((res) => {
-        console.log(res);
-        if (!res) {
-            db.requiredQuestion.create({
-                questionTitle: questionArray[i].questionTitle,
-                question: questionArray[i].question,
-                options: questionArray[i].options,
-                points: questionArray[i].points
-            });
-        }
-    }).catch((err) => { console.log(err) });
-}
+// const questionArray = [{
+//     questionTitle: "Investment Goals",
+//     question: "What is your primary investment goal?",
+//     options: {
+//         a: "Capital preservation",
+//         b: "Income generation",
+//         c: "Capital growth"
+//     },
+//     points: {
+//         a: 1,
+//         b: 2,
+//         c: 3
+//     }
+// }, {
+//     questionTitle: "Time Horizon",
+//     question: "What is your time horizon for this investment?",
+//     options: {
+//         a: "Short-term(Less than 1 year)",
+//         b: "Medium-term(1 year- 3 years)",
+//         c: "Long-term(More than 3 years)"
+//     },
+//     points: {
+//         a: 1,
+//         b: 2,
+//         c: 3
+//     }
+// }, {
+//     questionTitle: "Loss Tolerance",
+//     question: "What can you handle as a temporary drop in your portfolio?",
+//     options: {
+//         a: "I can not take any portfolio drop",
+//         b: "10-20%",
+//         c: "20% or More"
+//     },
+//     points: {
+//         a: 1,
+//         b: 2,
+//         c: 3
+//     }
+// }, {
+//     questionTitle: "Investment Knowledge",
+//     question: "What is your investment experience?",
+//     options: {
+//         a: "Have no experience investing",
+//         b: "I have some experience investing",
+//         c: "I am a professional investor"
+//     },
+//     points: {
+//         a: 1,
+//         b: 2,
+//         c: 3
+//     }
+// }, {
+//     questionTitle: "Financial Situation",
+//     question: "How would you describe your current financial situation and stability?",
+//     options: {
+//         a: "I have limited assets and income",
+//         b: "I have moderate assets and income",
+//         c: "I have significant assets and income"
+//     },
+//     points: {
+//         a: 1,
+//         b: 2,
+//         c: 3
+//     }
+// }, {
+//     questionTitle: " Market Conditions Reaction",
+//     question: "How do you typically react to changes in the financial markets?",
+//     options: {
+//         a: "Sell investments and move to more conservative options",
+//         b: "Hold steady and ride out market fluctuations",
+//         c: "Take advantage of market opportunities and possibly increase risk exposure"
+//     },
+//     points: {
+//         a: 1,
+//         b: 2,
+//         c: 3
+//     }
+// }]
+// for (let i = 0; i < questionArray.length; i++) {
+//     db.requiredQuestion.findOne({
+//         where: {
+//             questionTitle: questionArray[i].questionTitle
+//         }
+//     }).then((res) => {
+//         console.log(res);
+//         if (!res) {
+//             db.requiredQuestion.create({
+//                 questionTitle: questionArray[i].questionTitle,
+//                 question: questionArray[i].question,
+//                 options: questionArray[i].options,
+//                 points: questionArray[i].points
+//             });
+//         }
+//     }).catch((err) => { console.log(err) });
+// }
 
 // queryInterface.addColumn("user_services", "serviceActive", { type: DataTypes.BOOLEAN, defaultValue: true }).then((res) => { console.log(res) }).catch((err) => { console.log(err) });
 
