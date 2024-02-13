@@ -22,9 +22,9 @@ const checkResults = async (question, userAnswer) => {
             }
         }
     }
-    if (num <= 15) {
+    if (num <= 9) {
         result = "Conservative";
-    } else if (num > 15 && num <= 25) {
+    } else if (num >= 10 && num <= 15) {
         result = "Balanced";
     } else {
         result = "Aggresive";
