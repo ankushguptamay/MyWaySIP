@@ -1,19 +1,21 @@
 module.exports = (sequelize, DataTypes) => {
-    const Service = sequelize.define("services", {
+    const CommentOnService = sequelize.define("commentOnServices", {
         id: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
             primaryKey: true
         },
-        serviceName: {
+        comment: {
+            type: DataTypes.STRING(1234)
+        },
+        serviceId: {
             type: DataTypes.STRING
         },
-        price: {
-            type: DataTypes.STRING
-        },
-        serviceCode: {
+        userId: {
             type: DataTypes.STRING
         }
+    }, {
+        paranoid: true
     })
-    return Service;
+    return CommentOnService;
 }

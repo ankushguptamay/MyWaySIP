@@ -38,6 +38,10 @@ module.exports = (sequelize, DataTypes) => {
         },
         userId: {
             type: DataTypes.STRING
+        },
+        serviceActive: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: true
         }
     }, {
         paranoid: true

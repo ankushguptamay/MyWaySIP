@@ -83,6 +83,15 @@ exports.submitAnalysisReport = (data) => {
     const schema = joi.object().keys({
         uploadDate: joi.string().required(),
         userId: joi.string().required(),
+        serviceId: joi.string().required(),
+        serviceCode: joi.string().length(3).required()
+    });
+    return schema.validate(data);
+}
+
+exports.addCommentOnService = (data) => {
+    const schema = joi.object().keys({
+        comment: joi.string().max(1000).required(),
         serviceId: joi.string().required()
     });
     return schema.validate(data);

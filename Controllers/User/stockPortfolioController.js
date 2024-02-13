@@ -17,13 +17,14 @@ exports.addStockPortfolio = async (req, res) => {
         if (error) {
             return res.status(400).json(error.details[0].message);
         }
-        const { stockName, buyingPrice, investmentDate, currentMarketValue, shareQuantity } = req.body;
+        const { serviceId, stockName, buyingPrice, investmentDate, currentMarketValue, shareQuantity } = req.body;
         await StockPortfolio.create({
             stockName: stockName,
             buyingPrice: buyingPrice,
             currentMarketValue: currentMarketValue,
             investmentDate: investmentDate,
             shareQuantity: parseInt(shareQuantity),
+            serviceId: serviceId,
             userId: req.user.id
         });
         res.status(200).json({
@@ -92,9 +93,15 @@ exports.updateStockPortfolio = async (req, res) => {
             }
         });
         if (!stock) {
-            res.status(400).json({
+            return res.status(400).json({
                 success: false,
                 message: 'This Stock is not present!'
+            });
+        }
+        if (stock.isAnalysed === true) {
+            return res.status(400).json({
+                success: false,
+                message: 'Can not update a analysed stock!'
             });
         }
         // Store value to previous record
@@ -144,7 +151,7 @@ exports.softDeleteStockPortfolio = async (req, res) => {
             }
         });
         if (!stock) {
-            res.status(400).json({
+            return res.status(400).json({
                 success: false,
                 message: 'This Stock is not present!'
             });

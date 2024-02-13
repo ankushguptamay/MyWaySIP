@@ -22,7 +22,7 @@ var corsOptions = {
   origin: "*",
 };
 
-db.sequelize.sync()
+db.sequelize.sync({ force: true })
   .then(() => {
     console.log('Database is synced');
   })

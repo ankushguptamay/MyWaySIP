@@ -17,7 +17,7 @@ exports.addMFund = async (req, res) => {
         if (error) {
             return res.status(400).json(error.details[0].message);
         }
-        const { mFSchemeName, investedSIPAmount, investedLumSumAmount, investmentTypeSIP, investmentTypeLumSum, currentMarketValue, currentMFundValue, investmentDate } = req.body;
+        const { serviceId, mFSchemeName, investedSIPAmount, investedLumSumAmount, investmentTypeSIP, investmentTypeLumSum, currentMarketValue, currentMFundValue, investmentDate } = req.body;
         if (investmentTypeSIP === true && investmentTypeLumSum === false) {
             if (!investedSIPAmount) {
                 return res.status(400).json({
@@ -47,6 +47,7 @@ exports.addMFund = async (req, res) => {
             currentMFundValue: currentMFundValue,
             currentMarketValue: currentMarketValue,
             investmentDate: investmentDate,
+            serviceId: serviceId,
             byPDF: false,
             byData: true,
             userId: req.user.id
@@ -118,9 +119,15 @@ exports.updateMFund = async (req, res) => {
             }
         });
         if (!mFunds) {
-            res.status(400).json({
+            return res.status(400).json({
                 success: false,
                 message: 'This mutual fund is not present!'
+            });
+        }
+        if (mFunds.isAnalysed === true) {
+            return res.status(400).json({
+                success: false,
+                message: 'Can not update a analysed mutual fund!'
             });
         }
         // Store value to previous record
@@ -174,7 +181,7 @@ exports.softDeleteMFund = async (req, res) => {
             }
         });
         if (!mutualFunds) {
-            res.status(400).json({
+            return res.status(400).json({
                 success: false,
                 message: 'This Mutual fund is not present!'
             });

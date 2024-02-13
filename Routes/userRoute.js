@@ -9,6 +9,7 @@ const { getMyMFund, addMFund, softDeleteMFund, updateMFund } = require('../Contr
 const { createPayment, verifyPayment } = require('../Controllers/User/user_serviceController');
 const { addStockPortfolio, getMyStockPortfolio, updateStockPortfolio, softDeleteStockPortfolio } = require('../Controllers/User/stockPortfolioController');
 const { getReportForUser } = require('../Controllers/Admin/analysisReportController');
+const { addCommentOnService } = require('../Controllers/Admin/analysisReportController');
 
 //middleware
 const uploadImage = require("../Middlewares/uploadImages");
@@ -50,6 +51,9 @@ router.post("/createPayment/:id", verifyUserToken, isUserPresent, isUserAttempte
 router.post("/verifyPayment", verifyPayment);
 
 // Analysis Report
-router.get("/reports", verifyUserToken, isUserPresent, getReportForUser);
+router.get("/reports", verifyUserToken, isUserPresent, isUserAttemptedAllQuestion, getReportForUser);
+
+// Comment On Service
+router.post("/commentOnService", verifyUserToken, isUserPresent, isUserAttemptedAllQuestion, addCommentOnService);
 
 module.exports = router;

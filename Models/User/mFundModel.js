@@ -43,6 +43,13 @@ module.exports = (sequelize, DataTypes) => {
         },
         byData: {
             type: DataTypes.BOOLEAN
+        },
+        serviceId: {
+            type: DataTypes.STRING
+        },
+        isAnalysed: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
         }
     }, {
         paranoid: true

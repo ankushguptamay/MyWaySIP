@@ -1,6 +1,6 @@
 const dbConfig = require('../Config/db.config.js');
 
-const Sequelize = require('sequelize');
+const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = new Sequelize(dbConfig.database, dbConfig.user, dbConfig.password, {
     host: dbConfig.host,
     dialect: dbConfig.dialect,
@@ -14,6 +14,8 @@ const sequelize = new Sequelize(dbConfig.database, dbConfig.user, dbConfig.passw
 
 const db = {};
 
+const queryInterface = sequelize.getQueryInterface();
+
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
@@ -26,6 +28,7 @@ db.adminNotification = require('./Admin/adminNotificationModel.js')(sequelize, S
 db.emailCredential = require('./Admin/emailCredentialsModel.js')(sequelize, Sequelize);
 // User
 db.user = require('./User/userModel.js')(sequelize, Sequelize);
+db.commentOnService = require('./User/userCommentOnService.js')(sequelize, Sequelize);
 db.profileImage = require('./User/userProfileImageModel.js')(sequelize, Sequelize);
 db.questionAnswer = require('./User/requiredQuestionAnswerModel.js')(sequelize, Sequelize);
 db.questionResult = require('./User/requiredQuestionResultsModel.js')(sequelize, Sequelize);
@@ -81,19 +84,24 @@ db.profileImage.belongsTo(db.user, { foreignKey: "userId", as: "user" });
 
 // const serviceArray = [{
 //     serviceName: "New Mutual Fund Creation Tool",
-//     price: "100"
+//     price: "100",
+//     serviceCode:"AAA"
 // }, {
 //     serviceName: "Mutual Fund Portfolio Analysis Tool",
-//     price: "100"
+//     price: "100",
+//     serviceCode:"BBB"
 // }, {
 //     serviceName: "Stocks Portfolio Analysis",
-//     price: "100"
+//     price: "100",
+//     serviceCode:"CCC"
 // }, {
 //     serviceName: "Technical Analysis Tool For Stocks",
-//     price: "100"
+//     price: "100",
+//     serviceCode:"DDD"
 // },{
 //     serviceName: "Portfolio Management Service",
-//     price: "100"
+//     price: "100",S
+//     serviceCode:"EEE"
 // }]
 // for (let i = 0; i < serviceArray.length; i++) {
 //     db.service.findOne({
@@ -259,5 +267,7 @@ db.profileImage.belongsTo(db.user, { foreignKey: "userId", as: "user" });
 //         }
 //     }).catch((err) => { console.log(err) });
 // }
+
+// queryInterface.addColumn("user_services", "serviceActive", { type: DataTypes.BOOLEAN, defaultValue: true }).then((res) => { console.log(res) }).catch((err) => { console.log(err) });
 
 module.exports = db;

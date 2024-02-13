@@ -31,7 +31,8 @@ exports.addStockPortfolio = (data) => {
         buyingPrice: joi.string().required(),
         currentMarketValue: joi.string().required(),
         shareQuantity: joi.string().required(),
-        exitDate: joi.string().optional()
+        exitDate: joi.string().optional(),
+        serviceId: joi.string().required()
     });
     return schema.validate(data);
 }
@@ -58,7 +59,8 @@ exports.addMFund = (data) => {
         investmentTypeLumSum: joi.boolean().required(),
         currentMarketValue: joi.string().required(),
         currentMFundValue: joi.string().optional(),
-        investmentDate: joi.string().required()
+        investmentDate: joi.string().optional(),
+        serviceId: joi.string().required()
     });
     return schema.validate(data);
 }

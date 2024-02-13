@@ -333,14 +333,16 @@ exports.allUserForAdmin = async (req, res) => {
                     where: {
                         serviceId: serviceId,
                         status: "Paid",
-                        verify: true
+                        verify: true,
+                        serviceActive: true
                     }
                 });
             } else {
                 allSuccessPayment = await User_Service.findAll({
                     where: {
                         status: "Paid",
-                        verify: true
+                        verify: true,
+                        serviceActive: true
                     }
                 });
             }
@@ -412,9 +414,9 @@ exports.getUser = async (req, res) => {
             where: {
                 id: req.user.id
             },
-            include:[{
-                model:ProfileImage,
-                as:"profileImage"
+            include: [{
+                model: ProfileImage,
+                as: "profileImage"
             }]
         });
         if (!user) {

@@ -1,6 +1,10 @@
 const db = require('../../Models');
 const AnalysisReport = db.analysisReport;
-const { submitAnalysisReport } = require("../../Middlewares/Validation/validateAdmin");
+const StockPortfolio = db.stockPortfolio;
+const User_Service = db.user_service;
+const MutualFund = db.mFund;
+const CommentOnService = db.commentOnService;
+const { submitAnalysisReport, addCommentOnService } = require("../../Middlewares/Validation/validateAdmin");
 const { deleteSingleFile } = require("../../Util/deleteFile");
 const { s3UploadObject, s3DeleteObject } = require("../../Util/fileToS3");
 const fs = require('fs');
@@ -18,7 +22,24 @@ exports.submitReport = async (req, res) => {
             deleteSingleFile(req.file.path);
             return res.status(400).json(error.details[0].message);
         }
-        const { uploadDate, serviceId, userId } = req.body;
+        const { uploadDate, serviceId, userId, serviceCode } = req.body;
+        // Check Is this service Active or not
+        const checkService = await User_Service.findOne({
+            where: {
+                userId: userId,
+                serviceId: serviceId,
+                status: "Paid",
+                verify: true,
+                serviceActive: true
+            }
+        });
+        if (!checkService) {
+            deleteSingleFile(req.file.path);
+            return res.status(400).send({
+                success: true,
+                message: "This service is not active for this user!"
+            });
+        }
         // Uploading S3
         const imagePath = `./Resources/${(req.file.filename)}`
         const fileContent = fs.readFileSync(imagePath);
@@ -33,6 +54,33 @@ exports.submitReport = async (req, res) => {
             report_OriginalName: req.file.originalname,
             reportt_Path: fileAWSPath,
             report_MimeType: req.file.mimetype
+        });
+        // Change analysis status
+        if(serviceCode==="BBB"){
+            await MutualFund.update({
+                isAnalysed:true
+            },{
+                where:{
+                    serviceId:serviceId
+                }
+            });
+        } else if(serviceCode==="CCC"){
+            await StockPortfolio.update({
+                isAnalysed:true
+            },{
+                where:{
+                    serviceId:serviceId
+                }
+            });
+        }
+        // Deactive Service
+        await checkService.update({ ...checkService, serviceActive: false });
+        // Soft DeleteComment
+        await CommentOnService.destroy({
+            where: {
+                userId: userId,
+                serviceId: serviceId
+            }
         });
         res.status(200).send({
             success: true,
@@ -91,6 +139,30 @@ exports.getReportForUser = async (req, res) => {
         res.status(200).send({
             success: true,
             message: "Anylysis report fetched successfully!"
+        });
+    } catch (err) {
+        res.status(500).send({
+            success: false,
+            err: err.message
+        });
+    }
+};
+
+exports.addCommentOnService = async (req, res) => {
+    try {
+        const { error } = addCommentOnService(req.body);
+        if (error) {
+            return res.status(400).json(error.details[0].message);
+        }
+        const { serviceId, comment } = req.body;
+        await CommentOnService.create({
+            serviceId: serviceId,
+            comment: comment,
+            userId: req.user.id
+        });
+        res.status(200).send({
+            success: true,
+            message: "Comment successfully!"
         });
     } catch (err) {
         res.status(500).send({

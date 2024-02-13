@@ -22,6 +22,13 @@ module.exports = (sequelize, DataTypes) => {
         },
         exitDate: {
             type: DataTypes.DATEONLY
+        },
+        serviceId: {
+            type: DataTypes.STRING
+        },
+        isAnalysed: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
         }
     }, {
         paranoid: true
