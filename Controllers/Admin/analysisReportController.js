@@ -3,6 +3,7 @@ const AnalysisReport = db.analysisReport;
 const StockPortfolio = db.stockPortfolio;
 const User_Service = db.user_service;
 const MutualFund = db.mFund;
+const Service = db.service;
 const CommentOnService = db.commentOnService;
 const { submitAnalysisReport, addCommentOnService } = require("../../Middlewares/Validation/validateAdmin");
 const { deleteSingleFile } = require("../../Util/deleteFile");
@@ -14,7 +15,7 @@ exports.submitReport = async (req, res) => {
         if (!req.file) {
             return res.status(400).json({
                 success: false,
-                message: "Select an image!"
+                message: "Select a file!"
             })
         }
         const { error } = submitAnalysisReport(req.body);
@@ -22,7 +23,7 @@ exports.submitReport = async (req, res) => {
             deleteSingleFile(req.file.path);
             return res.status(400).json(error.details[0].message);
         }
-        const { uploadDate, serviceId, userId, serviceCode } = req.body;
+        const { uploadDate, serviceId, userId } = req.body;
         // Check Is this service Active or not
         const checkService = await User_Service.findOne({
             where: {
@@ -55,6 +56,13 @@ exports.submitReport = async (req, res) => {
             reportt_Path: fileAWSPath,
             report_MimeType: req.file.mimetype
         });
+        // Get Service
+        const service = await Service.findOne({
+            where: {
+                id: serviceId
+            }
+        });
+        const serviceCode = service.serviceCode;
         // Change analysis status
         if (serviceCode === "BBB") {
             await MutualFund.update({

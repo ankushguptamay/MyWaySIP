@@ -20,7 +20,7 @@ exports.createPayment = async (req, res) => {
             return res.status(400).send(error.details[0].message);
         }
         const { amount, currency, receipt } = req.body; // receipt is id created for this order
-        const serviceId = req.params.serviceId;
+        const serviceId = req.params.id;
         const userId = req.user.id;
         // initiate payment
         razorpayInstance.orders.create({ amount, currency, receipt },
