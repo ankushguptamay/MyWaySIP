@@ -85,7 +85,7 @@ exports.updateService = async (req, res) => {
         });
         res.status(200).send({
             success: true,
-            message: `Service fetched successfully!`,
+            message: `Service updtaed successfully!`,
             data: service
         });
     } catch (err) {

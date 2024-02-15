@@ -56,20 +56,20 @@ exports.submitReport = async (req, res) => {
             report_MimeType: req.file.mimetype
         });
         // Change analysis status
-        if(serviceCode==="BBB"){
+        if (serviceCode === "BBB") {
             await MutualFund.update({
-                isAnalysed:true
-            },{
-                where:{
-                    serviceId:serviceId
+                isAnalysed: true
+            }, {
+                where: {
+                    serviceId: serviceId
                 }
             });
-        } else if(serviceCode==="CCC"){
+        } else if (serviceCode === "CCC") {
             await StockPortfolio.update({
-                isAnalysed:true
-            },{
-                where:{
-                    serviceId:serviceId
+                isAnalysed: true
+            }, {
+                where: {
+                    serviceId: serviceId
                 }
             });
         }
@@ -106,12 +106,13 @@ exports.getReportForAdmin = async (req, res) => {
                 serviceId: serviceId
             };
         }
-        await AnalysisReport.findAll({
+        const analysis = await AnalysisReport.findAll({
             where: condition
         });
         res.status(200).send({
             success: true,
-            message: "Anylysis report fetched successfully!"
+            message: "Anylysis report fetched successfully!",
+            data: analysis
         });
     } catch (err) {
         res.status(500).send({
@@ -133,12 +134,13 @@ exports.getReportForUser = async (req, res) => {
                 serviceId: serviceId
             };
         }
-        await AnalysisReport.findAll({
+        const analysis = await AnalysisReport.findAll({
             where: condition
         });
         res.status(200).send({
             success: true,
-            message: "Anylysis report fetched successfully!"
+            message: "Anylysis report fetched successfully!",
+            data: analysis
         });
     } catch (err) {
         res.status(500).send({
