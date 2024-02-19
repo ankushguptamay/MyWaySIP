@@ -95,3 +95,11 @@ exports.addCommentOnService = (data) => {
     });
     return schema.validate(data);
 }
+
+exports.getCommentOnService = (data) => {
+    const schema = joi.object().keys({
+        userId: joi.string().required(),
+        serviceId: joi.string().required()
+    });
+    return schema.validate(data);
+}

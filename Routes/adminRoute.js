@@ -10,7 +10,7 @@ const { allUserForAdmin, userForAdmin } = require('../Controllers/User/AuthUser/
 const { getMFundForAdmin } = require('../Controllers/User/mFundController');
 const { getPaymentForAdmin } = require('../Controllers/User/user_serviceController');
 const { getAllNotification, changeSeenStatus, getNotification } = require('../Controllers/Admin/notificationController');
-const { submitReport, getReportForAdmin, deleteReport } = require('../Controllers/Admin/analysisReportController');
+const { submitReport, getReportForAdmin, deleteReport, getcommentOnServiceForAdmin } = require('../Controllers/Admin/analysisReportController');
 
 //middleware
 const { verifyAdminToken } = require('../Middlewares/verifyJWT');
@@ -63,5 +63,6 @@ router.get("/payments", verifyAdminToken, isAdminPresent, getPaymentForAdmin);
 router.get("/report/:id", verifyAdminToken, isAdminPresent, getReportForAdmin);
 router.post("/submitReport", verifyAdminToken, isAdminPresent, uploadImageAndPDF.single("report"), submitReport);
 router.delete("/deleteReport/:id", verifyAdminToken, isAdminPresent, deleteReport);
+router.get("/commentOnService", verifyAdminToken, isAdminPresent, getcommentOnServiceForAdmin);
 
 module.exports = router;

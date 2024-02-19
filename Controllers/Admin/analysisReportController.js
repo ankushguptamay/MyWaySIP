@@ -5,7 +5,7 @@ const User_Service = db.user_service;
 const MutualFund = db.mFund;
 const Service = db.service;
 const CommentOnService = db.commentOnService;
-const { submitAnalysisReport, addCommentOnService } = require("../../Middlewares/Validation/validateAdmin");
+const { submitAnalysisReport, addCommentOnService, getCommentOnService } = require("../../Middlewares/Validation/validateAdmin");
 const { deleteSingleFile } = require("../../Util/deleteFile");
 const { s3UploadObject, s3DeleteObject } = require("../../Util/fileToS3");
 const fs = require('fs');
@@ -200,6 +200,32 @@ exports.deleteReport = async (req, res) => {
         res.status(200).send({
             success: true,
             message: "Anylysis report deleted successfully!"
+        });
+    } catch (err) {
+        res.status(500).send({
+            success: false,
+            err: err.message
+        });
+    }
+};
+
+exports.getcommentOnServiceForAdmin = async (req, res) => {
+    try {
+        const { error } = getCommentOnService(req.body);
+        if (error) {
+            return res.status(400).json(error.details[0].message);
+        }
+        const { serviceId, userId } = req.body;
+        const comment = await CommentOnService.findOne({
+            where: {
+                serviceId: serviceId,
+                userId: userId
+            }
+        });
+        res.status(200).send({
+            success: true,
+            message: "Comment fetched successfully!",
+            data: comment
         });
     } catch (err) {
         res.status(500).send({
