@@ -211,11 +211,11 @@ exports.deleteReport = async (req, res) => {
 
 exports.getcommentOnServiceForAdmin = async (req, res) => {
     try {
-        const { error } = getCommentOnService(req.body);
+        const { error } = getCommentOnService(req.query);
         if (error) {
             return res.status(400).json(error.details[0].message);
         }
-        const { serviceId, userId } = req.body;
+        const { serviceId, userId } = req.query;
         const comment = await CommentOnService.findOne({
             where: {
                 serviceId: serviceId,

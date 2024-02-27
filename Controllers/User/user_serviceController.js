@@ -2,7 +2,7 @@ const db = require('../../Models');
 const User_Service = db.user_service;
 const crypto = require('crypto');
 const { createPayment } = require("../../Middlewares/Validation/validationUser");
-const { RAZORPAY_KEY_ID, RAZORPAY_SECRET_ID } = process.env;
+const { RAZORPAY_KEY_ID, RAZORPAY_SECRET_ID, THANKYOU_PATH } = process.env;
 const { Op } = require('sequelize');
 
 // Razorpay
@@ -100,10 +100,7 @@ exports.verifyPayment = async (req, res) => {
                 razorpayPaymentId: paymentId,
                 verify: true
             });
-            res.status(200).json({
-                success: true,
-                message: "Payment verified successfully!"
-            })
+            res.status(200).redirect(THANKYOU_PATH);
         }
         else {
             res.status(400).json({

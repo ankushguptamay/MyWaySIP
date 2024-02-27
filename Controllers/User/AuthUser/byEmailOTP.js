@@ -11,11 +11,12 @@ const { OTP_VALIDITY_IN_MILLISECONDS, OTP_DIGITS_LENGTH, JWT_SECRET_KEY_USER, JW
 const { registerByEmailOTP, verifyOTP, signInByEmailOTP, updateUser } = require("../../../Middlewares/Validation/validationUser");
 const { getUser } = require("../../../Middlewares/Validation/validateAdmin");
 
-const FORGET_OTP_VALIDITY = (OTP_VALIDITY_IN_MILLISECONDS) ? OTP_VALIDITY_IN_MILLISECONDS : '600000';
+const FORGET_OTP_VALIDITY = (OTP_VALIDITY_IN_MILLISECONDS) ? OTP_VALIDITY_IN_MILLISECONDS : '120000';
 const OTP_LENGTH = (OTP_DIGITS_LENGTH) ? OTP_DIGITS_LENGTH : 6;
 
 // Sending Email
 const emailOTP = require('../../../Util/generateOTP');
+const { sendEmail } = require("../../../Util/sendEmail");
 const brevo = require('@getbrevo/brevo');
 
 exports.registerByEmailOTP = async (req, res) => {
@@ -82,24 +83,70 @@ exports.registerByEmailOTP = async (req, res) => {
         if (finaliseEmailCredential) {
             // Send OTP to Email By Brevo
             if (finaliseEmailCredential.plateForm === "BREVO") {
-                let defaultClient = brevo.ApiClient.instance;
-                let apiKey = defaultClient.authentications['api-key'];
-                apiKey.apiKey = finaliseEmailCredential.EMAIL_API_KEY;
-                let apiInstance = new brevo.TransactionalEmailsApi();
-                let sendSmtpEmail = new brevo.SendSmtpEmail();
-                sendSmtpEmail.subject = "My Way SIP";
-                sendSmtpEmail.sender = { "name": "My Way SIP", "email": finaliseEmailCredential.email };
-                sendSmtpEmail.replyTo = { "email": finaliseEmailCredential.email, "name": "My Way SIP" };
-                sendSmtpEmail.headers = { "OTP for registration": "1232131" };
-                sendSmtpEmail.htmlContent = `OTP ${otp} Expires in ${parseInt(FORGET_OTP_VALIDITY) / 1000 / 60} minutes!`;
-                sendSmtpEmail.to = [
-                    { "email": email, "name": user.name }
-                ];
-                apiInstance.sendTransacEmail(sendSmtpEmail).then(function (data) {
-                    // console.log('API called successfully. Returned data: ' + JSON.stringify(data));
-                }, function (error) {
-                    console.error(error);
-                });
+                const options = {
+                    subject: "Register",
+                    brevoEmail: finaliseEmailCredential.email,
+                    brevoKey: finaliseEmailCredential.EMAIL_API_KEY,
+                    headers: { "OTP for ragistration verification": "123A" },
+                    htmlContent: `<!DOCTYPE html>
+                    <html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Verification Card</title>
+                            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap">
+                        <style>
+                            body {
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                height: 100vh;
+                                margin: 0;
+                                font-family: 'Poppins', sans-serif;
+                            }
+                            .verification-card {
+                                padding: 30px;
+                                border: 1px solid #ccc;
+                                box-shadow: 0 0 10px rgba(0, 0, 255, 0.1);
+                                max-width: 400px;
+                                width: 100%;
+                                font-family: 'Poppins', sans-serif;
+                            }
+                            .logo-img {
+                                max-width: 100px;
+                                height: auto;
+                            }
+                            .otp-container{
+                                font-size: 32px;
+                                font-weight: bold;
+                                text-align:center;
+                                color:#1c2e4a;
+                                font-family: 'Poppins', sans-serif;
+                              }
+                            .horizontal-line {
+                                border-top: 1px solid #ccc;
+                                margin: 15px 0;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="verification-card">
+                            <img src="https://images.unsplash.com/photo-1636051028886-0059ad2383c8?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Logo" class="logo-img">
+                            <p style='font-size:14px'>Hi <span style=" font-weight:600">${email},</span></p>
+                            <p style='font-size:14px;'>Please copy the One Time Password (OTP) below and enter it in the verification page on the My Way SIP.</p>
+                             <div class="horizontal-line"></div>
+                             <p class="otp-container"> ${otp}</p>
+                            <div class="horizontal-line"></div>
+                            
+                            <p style='font-size:14px;'>This code <span style="font-weight:600;" >expires in ${parseInt(FORGET_OTP_VALIDITY) / 1000 / 60} minutes.</span>Please,  <span style="font-weight:600;" >DONOT SHARE OR SEND THIS CODE TO ANYONE!</span></p>
+                              <div class="horizontal-line"></div>
+                        </div>
+                    </body>
+                    </html>`,
+                    userEmail: email,
+                    userName: user.name
+                }
+                await sendEmail(options);
                 const increaseNumber = parseInt(finaliseEmailCredential.emailSend) + 1;
                 await EmailCredential.update({
                     emailSend: increaseNumber
@@ -252,24 +299,70 @@ exports.signInByEmailOTP = async (req, res) => {
         if (finaliseEmailCredential) {
             // Send OTP to Email By Brevo
             if (finaliseEmailCredential.plateForm === "BREVO") {
-                let defaultClient = brevo.ApiClient.instance;
-                let apiKey = defaultClient.authentications['api-key'];
-                apiKey.apiKey = finaliseEmailCredential.EMAIL_API_KEY;
-                let apiInstance = new brevo.TransactionalEmailsApi();
-                let sendSmtpEmail = new brevo.SendSmtpEmail();
-                sendSmtpEmail.subject = "My Way SIP";
-                sendSmtpEmail.sender = { "name": "My Way SIP", "email": finaliseEmailCredential.email };
-                sendSmtpEmail.replyTo = { "email": finaliseEmailCredential.email, "name": "My Way SIP" };
-                sendSmtpEmail.headers = { "OTP for regenerate password": "1111111" };
-                sendSmtpEmail.htmlContent = `OTP ${otp} Expires in ${parseInt(FORGET_OTP_VALIDITY) / 1000 / 60} minutes!`;
-                sendSmtpEmail.to = [
-                    { "email": email, "name": user.name }
-                ];
-                apiInstance.sendTransacEmail(sendSmtpEmail).then(function (data) {
-                    // console.log('API called successfully. Returned data: ' + JSON.stringify(data));
-                }, function (error) {
-                    console.error(error);
-                });
+                const options = {
+                    subject: "Login",
+                    brevoEmail: finaliseEmailCredential.email,
+                    brevoKey: finaliseEmailCredential.EMAIL_API_KEY,
+                    headers: { "OTP for ragistration verification": "123A" },
+                    htmlContent: `<!DOCTYPE html>
+                    <html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Verification Card</title>
+                            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap">
+                        <style>
+                            body {
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                height: 100vh;
+                                margin: 0;
+                                font-family: 'Poppins', sans-serif;
+                            }
+                            .verification-card {
+                                padding: 30px;
+                                border: 1px solid #ccc;
+                                box-shadow: 0 0 10px rgba(0, 0, 255, 0.1);
+                                max-width: 400px;
+                                width: 100%;
+                                font-family: 'Poppins', sans-serif;
+                            }
+                            .logo-img {
+                                max-width: 100px;
+                                height: auto;
+                            }
+                            .otp-container{
+                                font-size: 32px;
+                                font-weight: bold;
+                                text-align:center;
+                                color:#1c2e4a;
+                                font-family: 'Poppins', sans-serif;
+                              }
+                            .horizontal-line {
+                                border-top: 1px solid #ccc;
+                                margin: 15px 0;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="verification-card">
+                            <img src="https://images.unsplash.com/photo-1636051028886-0059ad2383c8?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Logo" class="logo-img">
+                            <p style='font-size:14px'>Hi <span style=" font-weight:600">${email},</span></p>
+                            <p style='font-size:14px;'>Please copy the One Time Password (OTP) below and enter it in the verification page on the My Way SIP.</p>
+                             <div class="horizontal-line"></div>
+                             <p class="otp-container"> ${otp}</p>
+                            <div class="horizontal-line"></div>
+                            
+                            <p style='font-size:14px;'>This code <span style="font-weight:600;" >expires in ${parseInt(FORGET_OTP_VALIDITY) / 1000 / 60} minutes.</span>Please,  <span style="font-weight:600;" >DONOT SHARE OR SEND THIS CODE TO ANYONE!</span></p>
+                              <div class="horizontal-line"></div>
+                        </div>
+                    </body>
+                    </html>`,
+                    userEmail: email,
+                    userName: user.name
+                }
+                await sendEmail(options);
                 const increaseNumber = parseInt(finaliseEmailCredential.emailSend) + 1;
                 await EmailCredential.update({
                     emailSend: increaseNumber
