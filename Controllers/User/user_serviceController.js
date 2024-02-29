@@ -120,7 +120,7 @@ exports.verifyPayment = async (req, res) => {
 
 exports.getPaymentForAdmin = async (req, res) => {
     try {
-        const { page, limit, search, serviceActive } = req.query;
+        const { page, limit, search, serviceActive, isPaid } = req.query;
         // Pagination
         const recordLimit = parseInt(limit) || 10;
         let offSet = 0;
@@ -142,6 +142,10 @@ exports.getPaymentForAdmin = async (req, res) => {
         // service active or not, when value is true then only active data will get, when false history or deactivate data get and there is no value then both record get
         if (serviceActive) {
             condition.push({ serviceActive: serviceActive });
+        }
+        // payment status
+        if (isPaid) {
+            condition.push({ verify: isPaid });
         }
         // Count All Payment
         const totalUser_Service = await User_Service.count({
