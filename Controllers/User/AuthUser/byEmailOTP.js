@@ -131,7 +131,7 @@ exports.registerByEmailOTP = async (req, res) => {
                     </head>
                     <body>
                         <div class="verification-card">
-                            <img src="https://images.unsplash.com/photo-1636051028886-0059ad2383c8?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Logo" class="logo-img">
+                            <img src="https://affiliate.techastute.in/static/media/logo.49cbec0ecddcccf78524.png" alt="Logo" class="logo-img">
                             <p style='font-size:14px'>Hi <span style=" font-weight:600">${email},</span></p>
                             <p style='font-size:14px;'>Please copy the One Time Password (OTP) below and enter it in the verification page on the My Way SIP.</p>
                              <div class="horizontal-line"></div>
@@ -347,7 +347,7 @@ exports.signInByEmailOTP = async (req, res) => {
                     </head>
                     <body>
                         <div class="verification-card">
-                            <img src="https://images.unsplash.com/photo-1636051028886-0059ad2383c8?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Logo" class="logo-img">
+                            <img src="https://affiliate.techastute.in/static/media/logo.49cbec0ecddcccf78524.png" alt="Logo" class="logo-img">
                             <p style='font-size:14px'>Hi <span style=" font-weight:600">${email},</span></p>
                             <p style='font-size:14px;'>Please copy the One Time Password (OTP) below and enter it in the verification page on the My Way SIP.</p>
                              <div class="horizontal-line"></div>
