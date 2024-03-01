@@ -88,61 +88,40 @@ exports.registerByEmailOTP = async (req, res) => {
                     brevoEmail: finaliseEmailCredential.email,
                     brevoKey: finaliseEmailCredential.EMAIL_API_KEY,
                     headers: { "OTP for ragistration verification": "123A" },
-                    htmlContent: `<!DOCTYPE html>
-                    <html lang="en">
-                    <head>
-                        <meta charset="UTF-8">
-                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                        <title>Verification Card</title>
-                            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap">
-                        <style>
-                            body {
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
-                                height: 100vh;
-                                margin: 0;
-                                font-family: 'Poppins', sans-serif;
-                            }
-                            .verification-card {
-                                padding: 30px;
-                                border: 1px solid #ccc;
-                                box-shadow: 0 0 10px rgba(0, 0, 255, 0.1);
-                                max-width: 400px;
-                                width: 100%;
-                                font-family: 'Poppins', sans-serif;
-                            }
-                            .logo-img {
-                                max-width: 100px;
-                                height: auto;
-                            }
-                            .otp-container{
-                                font-size: 32px;
-                                font-weight: bold;
-                                text-align:center;
-                                color:#1c2e4a;
-                                font-family: 'Poppins', sans-serif;
-                              }
-                            .horizontal-line {
-                                border-top: 1px solid #ccc;
-                                margin: 15px 0;
-                            }
-                        </style>
-                    </head>
-                    <body>
-                        <div class="verification-card">
-                            <img src="https://affiliate.techastute.in/static/media/logo.49cbec0ecddcccf78524.png" alt="Logo" class="logo-img">
-                            <p style='font-size:14px'>Hi <span style=" font-weight:600">${email},</span></p>
-                            <p style='font-size:14px;'>Please copy the One Time Password (OTP) below and enter it in the verification page on the My Way SIP.</p>
-                             <div class="horizontal-line"></div>
-                             <p class="otp-container"> ${otp}</p>
-                            <div class="horizontal-line"></div>
-                            
-                            <p style='font-size:14px;'>This code <span style="font-weight:600;" >expires in ${parseInt(FORGET_OTP_VALIDITY) / 1000 / 60} minutes.</span>Please,  <span style="font-weight:600;" >DONOT SHARE OR SEND THIS CODE TO ANYONE!</span></p>
-                              <div class="horizontal-line"></div>
-                        </div>
-                    </body>
-                    </html>`,
+                    htmlContent: `
+                    <!DOCTYPE html>
+                  <html lang="en">
+                  <head>
+                      <meta charset="UTF-8">
+                      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                      <title>Verification Card</title>
+                  </head>
+                  <body style="margin: 0; padding: 0; background-color: #f4f5ff;">
+                      <center>
+                          <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+                              <tr>
+                                  <td align="center" style="padding: 20px 0; background-color: #f4f5ff;">
+                                      <table border="0" cellpadding="0" cellspacing="0" width="80%" style="max-width: 400px; background-color: #fff; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+                                          <tr>
+                                              <td style="padding: 30px;">
+                                                  <img src="https://affiliate.techastute.in/static/media/logo.49cbec0ecddcccf78524.png" alt="Logo" width="100" style="max-width: 100px; height: auto;">
+                                                  <p style="font-size: 14px; font-family: verdana; color: #333; margin: 15px 0;">Hi <span style="font-weight: 600; color: #333;">${email},</span></p>
+                                                  <p style="font-size: 14px; font-family: verdana; color: #333;">Please copy the One Time Password (OTP) below and enter it on the verification page of My Way SIP.</p>
+                                                  <hr style="border-top: 1px solid #ddd; margin: 15px 0;">
+                                                  <p style="font-size: 32px; font-weight: bold; text-align: center; color: #1c2e4a; margin: 20px 0;">${otp}</p>
+                                                  <hr style="border-top: 1px solid #ddd; margin: 15px 0;">
+                                                  <p style="font-size: 14px; font-family: verdana; color: #333;">This code <span style="font-weight: 600; color: #333;">expires in ${parseInt(FORGET_OTP_VALIDITY) / 1000 / 60} minutes.</span> Please, <span style="font-weight: 600; color: #333;">DO NOT SHARE OR SEND THIS CODE TO ANYONE!</span></p>
+                                                  <hr style="border-top: 1px solid #ddd; margin: 15px 0;">
+                                                  <p  style="font-size: 14px; text-align: center; color: #666;">Powered by Your Company | Address | Contact Information</p>
+                                              </td>
+                                          </tr>
+                                      </table>
+                                  </td>
+                              </tr>
+                          </table>
+                      </center>
+                  </body>
+                  </html>`,
                     userEmail: email,
                     userName: user.name
                 }
@@ -304,59 +283,37 @@ exports.signInByEmailOTP = async (req, res) => {
                     brevoEmail: finaliseEmailCredential.email,
                     brevoKey: finaliseEmailCredential.EMAIL_API_KEY,
                     headers: { "OTP for ragistration verification": "123A" },
-                    htmlContent: `<!DOCTYPE html>
+                    htmlContent: ` <!DOCTYPE html>
                     <html lang="en">
                     <head>
                         <meta charset="UTF-8">
                         <meta name="viewport" content="width=device-width, initial-scale=1.0">
                         <title>Verification Card</title>
-                            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap">
-                        <style>
-                            body {
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
-                                height: 100vh;
-                                margin: 0;
-                                font-family: 'Poppins', sans-serif;
-                            }
-                            .verification-card {
-                                padding: 30px;
-                                border: 1px solid #ccc;
-                                box-shadow: 0 0 10px rgba(0, 0, 255, 0.1);
-                                max-width: 400px;
-                                width: 100%;
-                                font-family: 'Poppins', sans-serif;
-                            }
-                            .logo-img {
-                                max-width: 100px;
-                                height: auto;
-                            }
-                            .otp-container{
-                                font-size: 32px;
-                                font-weight: bold;
-                                text-align:center;
-                                color:#1c2e4a;
-                                font-family: 'Poppins', sans-serif;
-                              }
-                            .horizontal-line {
-                                border-top: 1px solid #ccc;
-                                margin: 15px 0;
-                            }
-                        </style>
                     </head>
-                    <body>
-                        <div class="verification-card">
-                            <img src="https://affiliate.techastute.in/static/media/logo.49cbec0ecddcccf78524.png" alt="Logo" class="logo-img">
-                            <p style='font-size:14px'>Hi <span style=" font-weight:600">${email},</span></p>
-                            <p style='font-size:14px;'>Please copy the One Time Password (OTP) below and enter it in the verification page on the My Way SIP.</p>
-                             <div class="horizontal-line"></div>
-                             <p class="otp-container"> ${otp}</p>
-                            <div class="horizontal-line"></div>
-                            
-                            <p style='font-size:14px;'>This code <span style="font-weight:600;" >expires in ${parseInt(FORGET_OTP_VALIDITY) / 1000 / 60} minutes.</span>Please,  <span style="font-weight:600;" >DONOT SHARE OR SEND THIS CODE TO ANYONE!</span></p>
-                              <div class="horizontal-line"></div>
-                        </div>
+                    <body style="margin: 0; padding: 0; background-color: #f4f5ff;">
+                        <center>
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+                                <tr>
+                                    <td align="center" style="padding: 20px 0; background-color: #f4f5ff;">
+                                        <table border="0" cellpadding="0" cellspacing="0" width="80%" style="max-width: 400px; background-color: #fff; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+                                            <tr>
+                                                <td style="padding: 30px;">
+                                                    <img src="https://affiliate.techastute.in/static/media/logo.49cbec0ecddcccf78524.png" alt="Logo" width="100" style="max-width: 100px; height: auto;">
+                                                    <p style="font-size: 14px; font-family: verdana; color: #333; margin: 15px 0;">Hi <span style="font-weight: 600; color: #333;">${email},</span></p>
+                                                    <p style="font-size: 14px; font-family: verdana; color: #333;">Please copy the One Time Password (OTP) below and enter it on the verification page of My Way SIP.</p>
+                                                    <hr style="border-top: 1px solid #ddd; margin: 15px 0;">
+                                                    <p style="font-size: 32px; font-weight: bold; text-align: center; color: #1c2e4a; margin: 20px 0;">${otp}</p>
+                                                    <hr style="border-top: 1px solid #ddd; margin: 15px 0;">
+                                                    <p style="font-size: 14px; font-family: verdana; color: #333;">This code <span style="font-weight: 600; color: #333;">expires in ${parseInt(FORGET_OTP_VALIDITY) / 1000 / 60} minutes.</span> Please, <span style="font-weight: 600; color: #333;">DO NOT SHARE OR SEND THIS CODE TO ANYONE!</span></p>
+                                                    <hr style="border-top: 1px solid #ddd; margin: 15px 0;">
+                                                    <p  style="font-size: 14px; text-align: center; color: #666;">Powered by Your Company | Address | Contact Information</p>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </center>
                     </body>
                     </html>`,
                     userEmail: email,
