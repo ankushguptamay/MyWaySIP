@@ -8,7 +8,7 @@ const { getAllService, getService, updateService, createService } = require('../
 const { getStockPortfolioForAdmin } = require('../Controllers/User/stockPortfolioController');
 const { allUserForAdmin, userForAdmin } = require('../Controllers/User/AuthUser/byEmailOTP');
 const { getMFundForAdmin } = require('../Controllers/User/mFundController');
-const { getPaymentForAdmin } = require('../Controllers/User/user_serviceController');
+const { getPaymentForAdmin, getFailPayment } = require('../Controllers/User/user_serviceController');
 const { getAllNotification, changeSeenStatus, getNotification } = require('../Controllers/Admin/notificationController');
 const { submitReport, getReportForAdmin, deleteReport, getcommentOnServiceForAdmin } = require('../Controllers/Admin/analysisReportController');
 
@@ -58,6 +58,7 @@ router.get("/totalUser", verifyAdminToken, isAdminPresent, totalUser);
 
 // Payment
 router.get("/payments", verifyAdminToken, isAdminPresent, getPaymentForAdmin);
+router.get("/failPayments", verifyAdminToken, isAdminPresent, getFailPayment);
 
 // Analysis report
 router.get("/report/:id", verifyAdminToken, isAdminPresent, getReportForAdmin);

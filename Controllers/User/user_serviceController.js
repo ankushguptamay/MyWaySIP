@@ -117,10 +117,9 @@ exports.verifyPayment = async (req, res) => {
     }
 };
 
-
 exports.getPaymentForAdmin = async (req, res) => {
     try {
-        const { page, limit, search, serviceActive, isPaid } = req.query;
+        const { page, limit, search, serviceActive } = req.query;
         // Pagination
         const recordLimit = parseInt(limit) || 10;
         let offSet = 0;
@@ -143,10 +142,6 @@ exports.getPaymentForAdmin = async (req, res) => {
         if (serviceActive) {
             condition.push({ serviceActive: serviceActive });
         }
-        // payment status
-        if (isPaid) {
-            condition.push({ verify: isPaid });
-        }
         // Count All Payment
         const totalUser_Service = await User_Service.count({
             where: {
@@ -166,6 +161,49 @@ exports.getPaymentForAdmin = async (req, res) => {
         res.status(200).send({
             success: true,
             message: `Payment fetched successfully!`,
+            totalPage: Math.ceil(totalUser_Service / recordLimit),
+            currentPage: currentPage,
+            data: user_service
+        });
+    } catch (err) {
+        res.status(500).send({
+            success: false,
+            err: err.message
+        });
+    }
+};
+
+exports.getFailPayment = async (req, res) => {
+    try {
+        const { page, limit } = req.query;
+        // Pagination
+        const recordLimit = parseInt(limit) || 10;
+        let offSet = 0;
+        let currentPage = 1;
+        if (page) {
+            offSet = (parseInt(page) - 1) * recordLimit;
+            currentPage = parseInt(page);
+        }
+        const condition = [{ verify: false }];
+        // Count All Payment
+        const totalUser_Service = await User_Service.count({
+            where: {
+                [Op.and]: condition
+            }
+        });
+        const user_service = await User_Service.findAll({
+            where: {
+                [Op.and]: condition
+            },
+            limit: recordLimit,
+            offset: offSet,
+            order: [
+                ['createdAt', 'DESC']
+            ]
+        });
+        res.status(200).send({
+            success: true,
+            message: `Failed payment fetched successfully!`,
             totalPage: Math.ceil(totalUser_Service / recordLimit),
             currentPage: currentPage,
             data: user_service
