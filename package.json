@@ -10,6 +10,7 @@
     "dependencies": {
         "@getbrevo/brevo": "^1.0.1",
         "aws-sdk": "^2.1553.0",
+        "axios": "^1.7.7",
         "bcryptjs": "^2.4.3",
         "body-parser": "^1.20.1",
         "cors": "^2.8.5",

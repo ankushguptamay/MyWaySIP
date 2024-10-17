@@ -1,16 +1,21 @@
-const dbConfig = require('../Config/db.config.js');
+const dbConfig = require("../Config/db.config.js");
 
-const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = new Sequelize(dbConfig.database, dbConfig.user, dbConfig.password, {
+const { Sequelize, DataTypes } = require("sequelize");
+const sequelize = new Sequelize(
+  dbConfig.database,
+  dbConfig.user,
+  dbConfig.password,
+  {
     host: dbConfig.host,
     dialect: dbConfig.dialect,
     pool: {
-        max: dbConfig.pool.max,
-        min: dbConfig.pool.min,
-        acquire: dbConfig.pool.acquire,
-        idle: dbConfig.pool.idle
-    }
-});
+      max: dbConfig.pool.max,
+      min: dbConfig.pool.min,
+      acquire: dbConfig.pool.acquire,
+      idle: dbConfig.pool.idle,
+    },
+  }
+);
 
 const db = {};
 
@@ -20,46 +25,114 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 // Admin
-db.admin = require('./Admin/adminModel.js')(sequelize, Sequelize);
-db.requiredQuestion = require('./Admin/requireQuestionController.js')(sequelize, Sequelize);
-db.analysisReport = require('./Admin/analysisReportModel.js')(sequelize, Sequelize);
-db.service = require('./Admin/myServiceModel.js')(sequelize, Sequelize);
-db.adminNotification = require('./Admin/adminNotificationModel.js')(sequelize, Sequelize);
-db.emailCredential = require('./Admin/emailCredentialsModel.js')(sequelize, Sequelize);
+db.admin = require("./Admin/adminModel.js")(sequelize, Sequelize);
+db.requiredQuestion = require("./Admin/requireQuestionController.js")(
+  sequelize,
+  Sequelize
+);
+db.analysisReport = require("./Admin/analysisReportModel.js")(
+  sequelize,
+  Sequelize
+);
+db.service = require("./Admin/myServiceModel.js")(sequelize, Sequelize);
+db.adminNotification = require("./Admin/adminNotificationModel.js")(
+  sequelize,
+  Sequelize
+);
+db.emailCredential = require("./Admin/emailCredentialsModel.js")(
+  sequelize,
+  Sequelize
+);
 // User
-db.user = require('./User/userModel.js')(sequelize, Sequelize);
-db.commentOnService = require('./User/userCommentOnService.js')(sequelize, Sequelize);
-db.profileImage = require('./User/userProfileImageModel.js')(sequelize, Sequelize);
-db.questionAnswer = require('./User/requiredQuestionAnswerModel.js')(sequelize, Sequelize);
-db.questionResult = require('./User/requiredQuestionResultsModel.js')(sequelize, Sequelize);
-db.emailOTP = require('./User/emailOTPModel.js')(sequelize, Sequelize);
-db.mFund = require('./User/mFundModel.js')(sequelize, Sequelize);
-db.user_service = require('./User/user_ServiceModel.js')(sequelize, Sequelize);
-db.stockPortfolio = require('./User/stockPortfolioModel.js')(sequelize, Sequelize);
-db.previousStockPortfolio = require('./User/PreviousRecord/previousStockPortfolioModel.js')(sequelize, Sequelize);
-db.previousMFund = require('./User/PreviousRecord/previousMFundModel.js')(sequelize, Sequelize);
+db.user = require("./User/userModel.js")(sequelize, Sequelize);
+db.commentOnService = require("./User/userCommentOnService.js")(
+  sequelize,
+  Sequelize
+);
+db.profileImage = require("./User/userProfileImageModel.js")(
+  sequelize,
+  Sequelize
+);
+db.questionAnswer = require("./User/requiredQuestionAnswerModel.js")(
+  sequelize,
+  Sequelize
+);
+db.questionResult = require("./User/requiredQuestionResultsModel.js")(
+  sequelize,
+  Sequelize
+);
+db.emailOTP = require("./User/emailOTPModel.js")(sequelize, Sequelize);
+db.mFund = require("./User/mFundModel.js")(sequelize, Sequelize);
+db.user_service = require("./User/user_ServiceModel.js")(sequelize, Sequelize);
+db.stockPortfolio = require("./User/stockPortfolioModel.js")(
+  sequelize,
+  Sequelize
+);
+db.previousStockPortfolio =
+  require("./User/PreviousRecord/previousStockPortfolioModel.js")(
+    sequelize,
+    Sequelize
+  );
+db.previousMFund = require("./User/PreviousRecord/previousMFundModel.js")(
+  sequelize,
+  Sequelize
+);
+// Blog
+db.blogTags = require("./Blog/blogTagsModel.js")(sequelize, Sequelize);
+db.blogCategory = require("./Blog/blogCategoryModel.js")(sequelize, Sequelize);
+db.blogImages = require("./Blog/blogImgesModel.js")(sequelize, Sequelize);
+db.blog = require("./Blog/blogModel.js")(sequelize, Sequelize);
+db.blogTagAssociation = require("./Blog/blogTagAssociation.js")(
+  sequelize,
+  Sequelize
+);
+db.blogCategoryAssociation = require("./Blog/blogCategoryAssociation.js")(
+  sequelize,
+  Sequelize
+);
 
 // User Association
 db.user.hasMany(db.mFund, { foreignKey: "userId", as: "mFunds" });
 db.mFund.belongsTo(db.user, { foreignKey: "userId", as: "user" });
 
-db.user.hasMany(db.stockPortfolio, { foreignKey: "userId", as: "stockPortfolios" });
+db.user.hasMany(db.stockPortfolio, {
+  foreignKey: "userId",
+  as: "stockPortfolios",
+});
 db.stockPortfolio.belongsTo(db.user, { foreignKey: "userId", as: "user" });
 
-db.user.hasMany(db.previousStockPortfolio, { foreignKey: "userId", as: "previousStockPortfolios" });
+db.user.hasMany(db.previousStockPortfolio, {
+  foreignKey: "userId",
+  as: "previousStockPortfolios",
+});
 
-db.stockPortfolio.hasMany(db.previousStockPortfolio, { foreignKey: "stockId", as: "previousStockPortfolios" });
+db.stockPortfolio.hasMany(db.previousStockPortfolio, {
+  foreignKey: "stockId",
+  as: "previousStockPortfolios",
+});
 
-db.user.hasMany(db.previousMFund, { foreignKey: "userId", as: "previousMFunds" });
+db.user.hasMany(db.previousMFund, {
+  foreignKey: "userId",
+  as: "previousMFunds",
+});
 
-db.mFund.hasMany(db.previousMFund, { foreignKey: "mFundId", as: "previousMFunds" });
+db.mFund.hasMany(db.previousMFund, {
+  foreignKey: "mFundId",
+  as: "previousMFunds",
+});
 
 // Question Answer
 db.user.hasMany(db.questionAnswer, { foreignKey: "userId", as: "answers" });
 db.questionAnswer.belongsTo(db.user, { foreignKey: "userId", as: "user" });
 
-db.requiredQuestion.hasMany(db.questionAnswer, { foreignKey: "questionId", as: "answers" });
-db.questionAnswer.belongsTo(db.requiredQuestion, { foreignKey: "questionId", as: "questions" });
+db.requiredQuestion.hasMany(db.questionAnswer, {
+  foreignKey: "questionId",
+  as: "answers",
+});
+db.questionAnswer.belongsTo(db.requiredQuestion, {
+  foreignKey: "questionId",
+  as: "questions",
+});
 
 // Question Answer
 db.user.hasOne(db.questionResult, { foreignKey: "userId", as: "results" });
@@ -67,6 +140,52 @@ db.questionResult.belongsTo(db.user, { foreignKey: "userId", as: "user" });
 
 db.user.hasOne(db.profileImage, { foreignKey: "userId", as: "profileImage" });
 db.profileImage.belongsTo(db.user, { foreignKey: "userId", as: "user" });
+
+// Blog
+db.blog.hasMany(db.blogImages, {
+  foreignKey: "blogId",
+  as: "images",
+});
+db.blogImages.belongsTo(db.blog, {
+  foreignKey: "blogId",
+  as: "blog",
+});
+
+db.blog.hasMany(db.blogCategoryAssociation, {
+  foreignKey: "blogId",
+  as: "blogCategory_juction",
+});
+db.blogCategoryAssociation.belongsTo(db.blog, {
+  foreignKey: "blogId",
+  as: "blogs",
+});
+
+db.blogCategory.hasMany(db.blogCategoryAssociation, {
+  foreignKey: "blogCategoryId",
+  as: "blogCategory_juction",
+});
+db.blogCategoryAssociation.belongsTo(db.blogCategory, {
+  foreignKey: "blogCategoryId",
+  as: "categories",
+});
+
+db.blog.hasMany(db.blogTagAssociation, {
+  foreignKey: "blogId",
+  as: "blogTag_juction",
+});
+db.blogTagAssociation.belongsTo(db.blog, {
+  foreignKey: "blogId",
+  as: "blogs",
+});
+
+db.blogTags.hasMany(db.blogTagAssociation, {
+  foreignKey: "blogTagId",
+  as: "blogTag_juction",
+});
+db.blogTagAssociation.belongsTo(db.blogTags, {
+  foreignKey: "blogTagId",
+  as: "tags",
+});
 
 // db.emailCredential.findOne({
 //     where: {

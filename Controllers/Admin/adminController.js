@@ -57,7 +57,7 @@ exports.loginAdmin = async (req, res) => {
     try {
         const { error } = validateAdminLogin(req.body);
         if (error) {
-            console.log(error);
+            // console.log(error);
             return res.status(400).json(error.details[0].message);
         }
         const admin = await Admin.findOne({
